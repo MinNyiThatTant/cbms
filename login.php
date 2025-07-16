@@ -48,6 +48,7 @@
         $email = $_POST['useremail'];
         $password = $_POST['userpassword'];
 
+        // $password = password_hash($plainPassword, PASSWORD_DEFAULT);
         // $error = '<label for="promter" class="form-label"></label>';
 
         $result = $database->query("SELECT * FROM webuser WHERE email='$email'");
