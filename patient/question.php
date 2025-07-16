@@ -4,11 +4,6 @@ session_start();
 // Correct path to connection.php (assuming it's in the root directory)
 require_once __DIR__.'/../connection.php';
 
-// DEBUG: Check session state when questionnaire loads
-// echo "<pre>LOADING QUESTIONNAIRE - SESSION DATA:\n";
-// print_r($_SESSION);
-// echo "</pre>";
-
 
 // Check if patient is logged in
 if (!isset($_SESSION['patient_id']) || ($_SESSION['usertype'] ?? '') !== 'p') {
@@ -34,17 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->execute()) {
 
             $_SESSION['questionnarie_completed'] = true;
-            // DEBUG: Check session before redirect
-            // echo "<pre>BEFORE REDIRECT - SESSION DATA:\n";
-            // print_r($_SESSION);
-            // echo "</pre>";
-            // exit(); // Temporary - remove after debugging
-            // Clear problematic empty user session if exists
+            
             if (isset($_SESSION['user']) && empty($_SESSION['user'])) {
             unset($_SESSION['user']);
             }
+
             // Correct redirection to patient's index page
-            header("Location: index.php"); // Goes to patient/index.php
+            header("Location: index.php"); 
             exit();
         } else {
             $error = 'Error saving your answers. Please try again.';
@@ -107,13 +98,13 @@ $stmt->close();
         <form action="" method="post">
             <div class="question-box">
                 <div class="mb-3">
-                    <label class="form-label"><strong>1. How are you feeling today?</strong></label>
+                    <label class="form-label"><strong>1. How are you feeling today?/ သင်ဘယ်လိုဝေဒနာတွေ ခံစားနေရပါသလည်း။</strong></label>
                     <textarea class="form-control" name="feeling" rows="3" required placeholder="Describe how you feel today..."></textarea>
                 </div>
             </div>
             
             <div class="question-box">
-                <label class="form-label"><strong>2. Do you have a headache?</strong></label>
+                <label class="form-label"><strong>2. Do you have a headache?/ ခေါင်းကိုက်နေပါသလား။</strong></label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="headache" id="headache_yes" value="yes" required>
                     <label class="form-check-label" for="headache_yes">Yes</label>
@@ -125,7 +116,7 @@ $stmt->close();
             </div>
             
             <div class="question-box">
-                <label class="form-label"><strong>3. Do you have a fever?</strong></label>
+                <label class="form-label"><strong>3. Do you have a fever?/ဖျားနေတယ်လို့ ခံစားရပါသလား။</strong></label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="fever" id="fever_yes" value="yes" required>
                     <label class="form-check-label" for="fever_yes">Yes</label>
@@ -138,7 +129,7 @@ $stmt->close();
             
             <div class="question-box">
                 <div class="mb-3">
-                    <label class="form-label"><strong>4. Other symptoms you're experiencing?</strong> (optional)</label>
+                    <label class="form-label"><strong>4. Other symptoms you're experiencing?/ အခြား ဘာဝေဒနာတွေ ခံစားနေရပါသလည်း။</strong> (optional)</label>
                     <textarea class="form-control" name="other_symptoms" rows="3" placeholder="List any other symptoms..."></textarea>
                 </div>
             </div>
