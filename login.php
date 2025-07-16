@@ -12,8 +12,8 @@
 
     <title>Login</title>
 
-<style>
-    body, html {
+    <style>
+        body, html {
             height: 90%; 
             margin: 10px; 
         }
@@ -26,78 +26,70 @@
             border-radius: 10px; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
         }
-</style>
-
+    </style>
 </head>
 
 <body>
 
     <?php
-
     session_start();
-
     $_SESSION["user"] = "";
-    $_SESSION["usertype"] = "";
+    $_SESSION["usertype"] = "p";
 
     // Set the new timezone
-    date_default_timezone_set('Asia/Kolkata');
+    date_default_timezone_set('Asia/Yangon');
     $date = date('Y-m-d');
-
     $_SESSION["date"] = $date;
 
-
-    //import database
+    // Import database connection
     include("connection.php");
 
-
-
-
-
     if ($_POST) {
-
         $email = $_POST['useremail'];
         $password = $_POST['userpassword'];
 
-        $error = '<label for="promter" class="form-label"></label>';
+        // $error = '<label for="promter" class="form-label"></label>';
 
-        $result = $database->query("select * from webuser where email='$email'");
+        $result = $database->query("SELECT * FROM webuser WHERE email='$email'");
         if ($result->num_rows == 1) {
             $utype = $result->fetch_assoc()['usertype'];
             if ($utype == 'p') {
-                //TODO
-                $checker = $database->query("select * from patient where pemail='$email' and ppassword='$password'");
+                // Check if the patient exists
+                $checker = $database->query("SELECT * FROM patient WHERE pemail='$email' AND ppassword='$password'");
                 if ($checker->num_rows == 1) {
-
-
-                    //   Patient dashbord
-                    $_SESSION['user'] = $email;
+                    $patientData = $checker->fetch_assoc();
+                    
+                    // Store patient ID in session
+                    $_SESSION['patient_id'] = $patientData['pid']; // Assuming 'pid' is the patient ID
                     $_SESSION['usertype'] = 'p';
+                    $_SESSION['user'] = $email;
+                    
+                    // DEBUG: Check what's being stored in session
+                    echo "<pre>AFTER LOGIN - SESSION DATA:\n"; 
+                    print_r($_SESSION); 
+                    echo "</pre>";
+                    // exit(); // Temporary - remove after debugging
 
-                    header('location: patient/index.php');
+                    // Redirect to the questionnaire page
+                    header('location: patient/question.php'); // Redirect to the questionnaire page
+                    exit();
                 } else {
                     $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
                 }
             } elseif ($utype == 'a') {
-                //TODO
-                $checker = $database->query("select * from admin where aemail='$email' and apassword='$password'");
+                // Admin login
+                $checker = $database->query("SELECT * FROM admin WHERE aemail='$email' AND apassword='$password'");
                 if ($checker->num_rows == 1) {
-
-
-                    //   Admin dashbord
                     $_SESSION['user'] = $email;
                     $_SESSION['usertype'] = 'a';
-
                     header('location: admin/index.php');
                 } else {
                     $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
                 }
             } elseif ($utype == 'd') {
-                //TODO
-                $checker = $database->query("select * from doctor where docemail='$email' and docpassword='$password'");
+                // Doctor login
+                $checker = $database->query("SELECT * FROM doctor WHERE docemail='$email' AND docpassword='$password'");
                 if ($checker->num_rows == 1) {
-
-
-                    //   doctor dashbord
                     $_SESSION['user'] = $email;
                     $_SESSION['usertype'] = 'd';
                     header('location: doctor/index.php');
@@ -106,85 +98,73 @@
                 }
             }
         } else {
-            $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">We cant found any acount for this email.</label>';
+            $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">We can\'t find any account for this email.</label>';
         }
     } else {
         $error = '<label for="promter" class="form-label">&nbsp;</label>';
     }
-
     ?>
 
-
-
-
-    
-        <center>
-            <div class="container" style="justify-content: center;">
-                <table border="0" style="margin: 0;padding: 0;width: 80%;">
-                    <img src="img/favicon.png" alt="Icon"
-                                style="width:35px; height:35px; vertical-align: middle; margin-right: 8px;">
+    <center>
+        <div class="container" style="justify-content: center;">
+            <table border="0" style="margin: 0;padding: 0;width: 80%;">
+                <img src="img/favicon.png" alt="Icon" style="width:35px; height:35px; vertical-align: middle; margin-right: 8px;">
+                <tr>
+                    <td colspan="2">
+                        <p class="header-text">CBMS မှကြိုဆိုပါ၏</p>
+                    </td>
+                </tr>
+                <div class="form-body">
                     <tr>
                         <td colspan="2">
-                            <p class="header-text">CBMS မှကြိုဆိုပါ၏</p>
+                            <p class="sub-text">မြန်မာ / English ကြိုက်နှစ်သက်ရာဖြင့် ဖြည့်စွက်ပါ။</p>
                         </td>
                     </tr>
-                    <div class="form-body">
-                        <tr>
-                            <td colspan="2">
-                                <p class="sub-text">မြန်မာ / English ကြိုက်နှစ်သက်ရာဖြင့် ဖြည့်စွက်ပါ။</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <form action="" method="POST">
-                                <td class="label-td" colspan="2">
-                                    <label for="useremail" class="form-label">Email/အီးမေလ်း: </label>
-                                </td>
-                        </tr>
-                        <tr>
+                    <tr>
+                        <form action="" method="POST">
                             <td class="label-td" colspan="2">
-                                <input type="email" name="useremail" class="input-text" placeholder="လူကြီးမင်း၏ Email ထည့်ပါ။" required>
+                                <label for="useremail" class="form-label">Email/အီးမေလ်း: </label>
                             </td>
-                        </tr>
-                        <tr>
-                            <td class="label-td" colspan="2">
-                                <label for="userpassword" class="form-label">Password/လျို့ဝှက်နံပါတ်: </label>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="label-td" colspan="2">
-                                <input type="Password" name="userpassword" class="input-text" placeholder="Password/လျိ့ဝှက်နံပါတ်" required>
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td colspan="2"><br>
-                                <?php echo $error ?>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2">
-                                <input type="submit" value="Login" class="login-btn btn-primary btn">
-                            </td>
-                        </tr>
-                    </div>
+                    </tr>
+                    <tr>
+                        <td class="label-td" colspan="2">
+                            <input type="email" name="useremail" class="input-text" placeholder="လူကြီးမင်း၏ Email ထည့်ပါ။" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-td" colspan="2">
+                            <label for="userpassword" class="form-label">Password/လျို့ဝှက်နံပါတ်: </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-td" colspan="2">
+                            <input type="password" name="userpassword" class="input-text" placeholder="Password/လျိ့ဝှက်နံပါတ်" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><br>
+                            <?php echo $error ?>
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="2">
-                            <br>
-                            <label for="" class="sub-text" style="font-weight: 280;">လူကြီးမင်းသည် Account မပြုလုပ်ထားလျှင် &#63; </label>
-                            <a href="signup.php" class="active hover-link1 non-style-link">ဒီမှာ Sign Up ပြုလုပ်ပါ။</a><br>
-                            <a href="index.html" class="active hover-link1 non-style-link"><မူလ စာမျက်နှာသို့></a>
-                            <br><br><br>
+                            <input type="submit" value="Login" class="login-btn btn-primary btn">
                         </td>
                     </tr>
-                    </form>
-                </table>
-
-            </div>
-        </center>
+                </div>
+                <tr>
+                    <td colspan="2">
+                        <br>
+                        <label for="" class="sub-text" style="font-weight: 280;">လူကြီးမင်းသည် Account မပြုလုပ်ထားလျှင် &#63; </label>
+                        <a href="signup.php" class="active hover-link1 non-style-link">ဒီမှာ Sign Up ပြုလုပ်ပါ။</a><br>
+                        <a href="index.html" class="active hover-link1 non-style-link"><မူလ စာမျက်နှာသို့></a>
+                        <br><br><br>
+                    </td>
+                </tr>
+                </form>
+            </table>
+        </div>
+    </center>
     
 </body>
-
 </html>
