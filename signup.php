@@ -12,7 +12,7 @@
     <title>Sign Up</title>
 
     <style>
-    body, html {
+        body, html {
             height: 100%; 
             margin: 10px; 
         }
@@ -25,58 +25,44 @@
             border-radius: 10px; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
         }
-</style>
-
-    
+    </style>
 </head>
 <body>
 <?php
+session_start(); // Start the session
 
-//learn from w3schools.com
-//Unset all the server side variables
-
-session_start();
-
-$_SESSION["user"]="";
-$_SESSION["usertype"]="";
+// Unset all the server-side variables
+$_SESSION["user"] = "";
+$_SESSION["usertype"] = "";
 
 // Set the new timezone
-date_default_timezone_set('Asia/Kolkata');
+date_default_timezone_set('Asia/Yangon');
 $date = date('Y-m-d');
+$_SESSION["date"] = $date;
 
-$_SESSION["date"]=$date;
-
-
-
-if($_POST){
-
-    
-
-    $_SESSION["personal"]=array(
-        'fname'=>$_POST['fname'],
-        'lname'=>$_POST['lname'],
-        'address'=>$_POST['address'],
-        'nic'=>$_POST['nic'],
-        'dob'=>$_POST['dob']
+if ($_POST) {
+    // Store personal information in session
+    $_SESSION["personal"] = array(
+        'fname' => $_POST['fname'],
+        'lname' => $_POST['lname'],
+        'address' => $_POST['address'],
+        'nic' => $_POST['nic'],
+        'dob' => $_POST['dob']
     );
 
+    // Debugging output (optional)
+    // print_r($_SESSION["personal"]);
 
-    print_r($_SESSION["personal"]);
-    header("location: create-account.php");
-
-
-
-
+    // Redirect to the next step (create-account.php or login.php)
+    header("Location: create-account.php"); // Change this to login.php if needed
+    exit(); // Ensure no further code is executed
 }
-
 ?>
 
-
-    <center>
+<center>
     <div class="container">
         <table border="0" style="width: 70%;">
-            <img src="img/favicon.png" alt="Icon"
-                                style="width:35px; height:35px; vertical-align: middle; margin-right: 8px;">
+            <img src="img/favicon.png" alt="Icon" style="width:35px; height:35px; vertical-align: middle; margin-right: 8px;">
             <tr>
                 <td colspan="2">
                     <p class="header-text">ဤနေရာတွင် Account ပြုလုပ်နိုင်သည်။</p>
@@ -84,18 +70,15 @@ if($_POST){
                 </td>
             </tr>
             <tr>
-                <form action="" method="POST" >
-                <td class="label-td" colspan="2">
-                    <label for="name" class="form-label">အမည်: </label>
-                </td>
+                <form action="" method="POST">
+                    <td class="label-td" colspan="2">
+                        <label for="name" class="form-label">အမည်: </label>
+                    </td>
             </tr>
             <tr>
                 <td class="label-td" colspan="2">
                     <input type="text" name="fname" class="input-text" placeholder="လူကြီးမင်း၏နာမည်ထည့်ပါ။" required>
                 </td>
-                <!-- <td class="label-td">
-                    <input type="text" name="lname" class="input-text" placeholder="Last Name" required>
-                </td> -->
             </tr>
             <tr>
                 <td class="label-td" colspan="2">
@@ -128,18 +111,12 @@ if($_POST){
                 </td>
             </tr>
             <tr>
-                <td class="label-td" colspan="2">
-                </td>
-            </tr>
-
-            <tr>
                 <td>
-                    <input type="reset" value="Reset" class="login-btn btn-primary-soft btn" >
+                    <input type="reset" value="Reset" class="login-btn btn-primary-soft btn">
                 </td>
                 <td>
                     <input type="submit" value="Next" class="login-btn btn-primary btn">
                 </td>
-
             </tr>
             <tr>
                 <td colspan="2">
@@ -149,11 +126,9 @@ if($_POST){
                     <a href="index.html" class="active hover-link1 non-style-link"><မူလ စာမျက်နှာသို့></a>
                 </td>
             </tr>
-
-                    </form>
+                </form>
             </tr>
         </table>
-
     </div>
 </center>
 

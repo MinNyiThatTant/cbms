@@ -11,10 +11,10 @@
         
     <title>Create Account</title>
     <style>
-        .container{
+        .container {
             animation: transitionIn-X 0.5s;
         }
-    body, html {
+        body, html {
             height: 100%; 
             margin: 10px; 
         }
@@ -31,83 +31,72 @@
 </head>
 <body>
 <?php
-
 session_start();
 
-$_SESSION["user"]="";
-$_SESSION["usertype"]="";
+$_SESSION["user"] = "";
+$_SESSION["usertype"] = "";
 
 // Set the new timezone
 date_default_timezone_set('Asia/Yangon');
 $date = date('Y-m-d');
+$_SESSION["date"] = $date;
 
-$_SESSION["date"]=$date;
-
-
-//import database
+// Import database
 include("connection.php");
 
+if ($_POST) {
+    $fname = $_SESSION['personal']['fname'];
+    $lname = $_SESSION['personal']['lname'];
+    $name = $fname . " " . $lname;
+    $address = $_SESSION['personal']['address'];
+    $nic = $_SESSION['personal']['nic'];
+    $dob = $_SESSION['personal']['dob'];
+    $email = $_POST['newemail'];
+    $tele = $_POST['tele'];
+    $newpassword = $_POST['newpassword'];
+    $cpassword = $_POST['cpassword'];
 
-
-
-
-if($_POST){
-
-    $result= $database->query("select * from webuser");
-
-    $fname=$_SESSION['personal']['fname'];
-    $lname=$_SESSION['personal']['lname'];
-    $name=$fname." ".$lname;
-    $address=$_SESSION['personal']['address'];
-    $nic=$_SESSION['personal']['nic'];
-    $dob=$_SESSION['personal']['dob'];
-    $email=$_POST['newemail'];
-    $tele=$_POST['tele'];
-    $newpassword=$_POST['newpassword'];
-    $cpassword=$_POST['cpassword'];
-    
-    if ($newpassword==$cpassword){
-        $sqlmain= "select * from webuser where email=?;";
+    if ($newpassword == $cpassword) {
+        // Check if the email already exists
+        $sqlmain = "SELECT * FROM webuser WHERE email = ?;";
         $stmt = $database->prepare($sqlmain);
-        $stmt->bind_param("s",$email);
+        $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
-        if($result->num_rows==1){
-            $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>';
-        }else{
-            //TODO
-            $database->query("insert into patient(pemail,pname,ppassword, paddress, pnic,pdob,ptel) values('$email','$name','$newpassword','$address','$nic','$dob','$tele');");
-            $database->query("insert into webuser values('$email','p')");
 
-            //print_r("insert into patient values($pid,'$email','$fname','$lname','$newpassword','$address','$nic','$dob','$tele');");
-            $_SESSION["user"]=$email;
-            $_SESSION["usertype"]="p";
-            $_SESSION["username"]=$fname;
+        if ($result->num_rows == 1) {
+            $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>';
+        } else {
+            // Insert new patient and webuser
+            $stmt = $database->prepare("INSERT INTO patient (pemail, pname, ppassword, paddress, pnic, pdob, ptel) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssss", $email, $name, $newpassword, $address, $nic, $dob, $tele);
+            $stmt->execute();
 
-            header('Location: patient/index.php');
-            $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;"></label>';
+            $stmt = $database->prepare("INSERT INTO webuser (email, usertype) VALUES (?, 'p')");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+
+            // Set session variables
+            $_SESSION["user"] = $email;
+            $_SESSION["usertype"] = "p";
+            $_SESSION["username"] = $fname;
+
+            // Redirect to login page after account creation
+            header('Location: login.php');
+            exit(); // Ensure no further code is executed
         }
-        
-    }else{
-        $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Password Conformation Error! Reconform Password</label>';
+    } else {
+        $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Password Confirmation Error! Please reconfirm your password.</label>';
     }
-
-
-
-    
-}else{
-    //header('location: signup.php');
-    $error='<label for="promter" class="form-label"></label>';
+} else {
+    $error = '<label for="promter" class="form-label"></label>';
 }
-
 ?>
 
-
-    <center>
+<center>
     <div class="container">
         <table border="0" style="width: 80%;">
-            <img src="img/favicon.png" alt="Icon"
-                                style="width:35px; height:35px; vertical-align: middle; margin-right: 8px;">
+            <img src="img/favicon.png" alt="Icon" style="width:35px; height:35px; vertical-align: middle; margin-right: 8px;">
             <tr>
                 <td colspan="3">
                     <p class="header-text">ဆက်လက် ဖြည့်စွက်ပါ။</p>
@@ -115,7 +104,7 @@ if($_POST){
                 </td>
             </tr>
             <tr>
-                <form action="" method="POST" >
+                <form action="" method="POST">
                 <td class="label-td" colspan="3">
                     <label for="newemail" class="form-label">Email/အီးမေလ်း: </label>
                 </td>
@@ -124,7 +113,6 @@ if($_POST){
                 <td class="label-td" colspan="3">
                     <input type="email" name="newemail" class="input-text" placeholder="Email/အီးမေလ်း ထည့်ပါ။" required>
                 </td>
-                
             </tr>
             <tr>
                 <td class="label-td" colspan="3">
@@ -133,7 +121,7 @@ if($_POST){
             </tr>
             <tr>
                 <td class="label-td" colspan="3">
-                    <input type="tel" name="tele" class="input-text"  maxlength="11" placeholder="ဥပမာ- 09********" pattern="[0]{1}[0-9]{9}" >
+                    <input type="tel" name="tele" class="input-text" maxlength="11" placeholder="ဥပမာ- 09********" pattern="[0]{1}[0-9]{9}" required>
                 </td>
             </tr>
             <tr>
@@ -156,26 +144,21 @@ if($_POST){
                     <input type="password" name="cpassword" class="input-text" placeholder="လျို့ဝှက်နံပါတ်အတည်ပြုပါ။" required>
                 </td>
             </tr>
-     
             <tr>
-                
                 <td colspan="3">
-                    <?php echo $error ?>
-
+                    <?php if (isset($error)) echo $error; ?>
                 </td>
             </tr>
-            
             <tr>
                 <td>
-                    <input type="button" onclick="window.history.back();" value="Back" class="login-btn btn-primary-soft btn" >
+                    <input type="button" onclick="window.history.back();" value="Back" class="login-btn btn-primary-soft btn">
                 </td>
                 <td>
-                    <input type="reset" value="Reset" class="login-btn btn-primary-soft btn" >
+                    <input type="reset" value="Reset" class="login-btn btn-primary-soft btn">
                 </td>
                 <td>
                     <input type="submit" value="Sign Up" class="login-btn btn-primary btn">
                 </td>
-
             </tr>
             <tr>
                 <td colspan="3">
@@ -185,11 +168,9 @@ if($_POST){
                     <a href="index.html" class="active hover-link1 non-style-link"><မူလ စာမျက်နှာသို့></a><br>
                 </td>
             </tr>
-
-                    </form>
+                </form>
             </tr>
         </table>
-
     </div>
 </center>
 

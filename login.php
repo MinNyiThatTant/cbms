@@ -34,7 +34,7 @@
     <?php
     session_start();
     $_SESSION["user"] = "";
-    $_SESSION["usertype"] = "p";
+    $_SESSION["usertype"] = "";
 
     // Set the new timezone
     date_default_timezone_set('Asia/Yangon');
