@@ -29,7 +29,7 @@
 - View their scheduled sessions
 - View details of patients
 - Delete account    
-- Eedit account settings
+- Edit account settings
         
 ### Patiens(Clients)
   
