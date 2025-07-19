@@ -109,7 +109,7 @@
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">Today's Date</p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php 
-                            date_default_timezone_set('Asia/Kolkata');
+                            date_default_timezone_set('Asia/Yangon');
                             $today = date('Y-m-d');
                             echo $today;
                             $list110 = $database->query("SELECT * FROM schedule INNER JOIN appointment ON schedule.scheduleid=appointment.scheduleid INNER JOIN patient ON patient.pid=appointment.pid INNER JOIN doctor ON schedule.docid=doctor.docid WHERE doctor.docid=$userid");
