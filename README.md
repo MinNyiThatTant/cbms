@@ -16,15 +16,6 @@
 
 ## System Overview
 
-```mermaid
-flowchart TD
-    A[Patient] -->|Books| B[Web Interface]
-    B --> C[Backend API]
-    C --> D[(Database)]
-    E[Admin] -->|Manages| D
-    F[Doctor] -->|Views| D
-    C --> G[Email Service]
-
 ### Admin
   
 - Admin can add doctors, edit doctors, delete doctors    
@@ -43,7 +34,7 @@ flowchart TD
 ### Patiens(Clients)
   
   - Make appointment online
-  - Create accounts themslves
+  - Create accounts themselves
   - View their old booking
   - Delete account
   - Edit account settings
