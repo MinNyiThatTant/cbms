@@ -16,27 +16,12 @@ if (isset($_SESSION["user"])) {
 // Import database
 include("../connection.php");
 
-// Get user ID from session
-$userid = $_SESSION["userid"]; // Assuming you have stored user ID in session
+// Initialize statements
+$stmt = null;
+$stmtCheck = null;
+$stmtInsert = null;
 
-// Check if the form was submitted
-if ($_POST) {
-    // Get the schedule ID from the form submission
-    $scheduleid = $_POST['scheduleid'];
-
-    // Check if the patient has already booked this session
-    $sqlCheckBooking = "SELECT * FROM appointment WHERE pid = ? AND scheduleid = ?";
-    $stmtCheck = $database->prepare($sqlCheckBooking);
-    $stmtCheck->bind_param("ii", $userid, $scheduleid);
-    $stmtCheck->execute();
-    $resultCheck = $stmtCheck->get_result();
-
-    if ($resultCheck->num_rows > 0) {
-        // Patient has already booked this appointment
-        echo '<div class="alert alert-warning">You have already booked this appointment. You cannot book again.</div>';
-        exit(); // Stop further execution
-    }
-
+try {
     // Fetch user details
     $sqlmain = "SELECT * FROM patient WHERE pemail=?";
     $stmt = $database->prepare($sqlmain);
@@ -45,33 +30,150 @@ if ($_POST) {
     $userrow = $stmt->get_result();
     $userfetch = $userrow->fetch_assoc();
     $userid = $userfetch["pid"];
-    $username = $userfetch["pname"];
 
-    // Proceed with booking
-    if (isset($_POST["booknow"])) {
-        $apponum = $_POST["apponum"];
-        $date = $_POST["date"];
+    // Initialize alert message
+    $alertMessage = '';
 
-        // Prepare the insert statement
-        $sqlInsert = "INSERT INTO appointment (pid, apponum, scheduleid, appodate) VALUES (?, ?, ?, ?)";
-        $stmtInsert = $database->prepare($sqlInsert);
-        $stmtInsert->bind_param("iiis", $userid, $apponum, $scheduleid, $date);
+    // Check if the form was submitted
+    if ($_POST) {
+        // Get the schedule ID from the form submission
+        $scheduleid = $_POST['scheduleid'];
 
-        // Execute the insert statement
-        if ($stmtInsert->execute()) {
-            // Redirect to appointment page with success message
-            header("location: appointment.php?action=booking-added&id=" . $apponum . "&titleget=none");
-            exit();
+        // Check if the patient has already booked this session
+        $sqlCheckBooking = "SELECT * FROM appointment WHERE pid = ? AND scheduleid = ?";
+        $stmtCheck = $database->prepare($sqlCheckBooking);
+        $stmtCheck->bind_param("ii", $userid, $scheduleid);
+        $stmtCheck->execute();
+        $resultCheck = $stmtCheck->get_result();
+
+        if ($resultCheck->num_rows > 0) {
+            // Patient has already booked this appointment
+            $alertMessage = '
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill mr-3" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    <div>
+                        <strong>Warning!</strong> You have already booked this appointment for the selected time.
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>';
         } else {
-            // Handle error
-            echo '<div class="alert alert-danger">There was an error booking your appointment. Please try again.</div>';
+            // Proceed with booking
+            if (isset($_POST["booknow"])) {
+                $apponum = $_POST["apponum"];
+                $date = $_POST["date"];
+
+                // Prepare the insert statement
+                $sqlInsert = "INSERT INTO appointment (pid, apponum, scheduleid, appodate) VALUES (?, ?, ?, ?)";
+                $stmtInsert = $database->prepare($sqlInsert);
+                $stmtInsert->bind_param("iiis", $userid, $apponum, $scheduleid, $date);
+
+                // Execute the insert statement
+                if ($stmtInsert->execute()) {
+                    // Redirect to appointment page with success message
+                    header("location: appointment.php?action=booking-added&id=" . $apponum . "&titleget=none");
+                    exit();
+                } else {
+                    // Handle error
+                    $alertMessage = '
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle-fill mr-3" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                            <div>
+                                <strong>Error!</strong> There was a problem booking your appointment. Please try again.
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                }
+            }
         }
     }
+} catch (Exception $e) {
+    $alertMessage = '
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> ' . htmlspecialchars($e->getMessage()) . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>';
+} finally {
+    // Close statements if they exist
+    if ($stmt) $stmt->close();
+    if ($stmtCheck) $stmtCheck->close(); 
+    if ($stmtInsert) $stmtInsert->close();
+    $database->close();
 }
-
-// Close the prepared statements
-$stmtCheck->close();
-$stmt->close();
-$stmtInsert->close();
-$database->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Complete</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .alert {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .alert svg {
+            flex-shrink: 0;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <?php if (!empty($alertMessage)) echo $alertMessage; ?>
+                
+                <?php if (empty($alertMessage) || strpos($alertMessage, 'Warning') !== false): ?>
+                <!-- <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Appointment Booking</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="scheduleid" class="form-label">Schedule ID</label>
+                                <input type="text" class="form-control" id="scheduleid" name="scheduleid" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="apponum" class="form-label">Appointment Number</label>
+                                <input type="number" class="form-control" id="apponum" name="apponum" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date" class="form-label">Appointment Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                            <button type="submit" name="booknow" class="btn btn-primary w-100">
+                                <i class="fas fa-calendar-check me-2"></i>Book Appointment
+                            </button>
+                        </form>
+                    </div>
+                </div> -->
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
