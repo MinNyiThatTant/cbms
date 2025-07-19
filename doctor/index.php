@@ -153,10 +153,10 @@
                     <center>
                     <table class="filter-container doctor-header" style="border: none;width:95%" border="0" >
                     <tr>
-                        <td >
-                            <h3>ကြိုဆိုပါတယ် ဒေါက်တာ <?php echo $username  ?></h3>
-                            <p>ကျွန်ုပ်တို့ဆေးခန်းတွင် ကုသပေးမှုအတွက် ကျေးဇူးတင်ပါသည်။<br>
-                            ဒေါက်တာ၏ကုသနိုင်မည့်အချိန်များကို ကြည့်ရှုနိုင်ပြီး လူနားများ၏ချိန်းဆိုမှုများ လက်ခံနိုင်ပါသည်။<br>
+                        <td style="text-align: center;">
+                            <h3>ကြိုဆိုပါတယ် ဒေါက်တာ <b style="color: green;"><?php echo $username  ?></b></h3>
+                            <p><b>ကျွန်ုပ်တို့ဆေးခန်းတွင် ကုသပေးမှုအတွက် ကျေးဇူးတင်ပါသည်။<br>
+                            ဒေါက်တာ၏ကုသနိုင်မည့်အချိန်များကို ကြည့်ရှုနိုင်ပြီး လူနားများ၏ချိန်းဆိုမှုများ လက်ခံနိုင်ပါသည်။</b><br>
                             </p>
                             <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="width:30%">View My Appointments</button></a>
                         </td>
