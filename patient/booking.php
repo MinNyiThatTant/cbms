@@ -67,10 +67,21 @@
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
 
-
-    //echo $userid;
-    //echo $username;
-
+    // Check if the patient has already booked an appointment
+    $sqlCheckBooking = "SELECT * FROM appointment WHERE pid = ?";
+    $stmtCheck = $database->prepare($sqlCheckBooking);
+    $stmtCheck->bind_param("i", $userid);
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->get_result();
+    if ($resultCheck->num_rows > 0) {
+        // Patient has already booked an appointment
+        $alertMessage = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Warning!</strong> You have already booked an appointment. You cannot book again.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+    }
 
 
     date_default_timezone_set('Asia/Yangon');
