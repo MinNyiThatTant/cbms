@@ -115,7 +115,7 @@
                         <tr >
                             
                             <td colspan="1" class="nav-bar" >
-                            <p style="font-size: 23px;padding-left:12px;font-weight: 600;margin-left:20px;">     Dashboard</p>
+                            <p style="font-size: 23px;padding-left:12px;font-weight: 600;margin-left:20px;">ဒေါက်တာ၏ မူလစာမျက်နှာ</p>
                           
                             </td>
                             <td width="25%">
@@ -149,20 +149,16 @@
         
                         </tr>
                 <tr>
-                    <td colspan="4" >
-                        
+                    <td colspan="4">
                     <center>
                     <table class="filter-container doctor-header" style="border: none;width:95%" border="0" >
                     <tr>
                         <td >
-                            <h3>Welcome!</h3>
-                            <h1><?php echo $username  ?>.</h1>
-                            <p>Thanks for joinnig with us. We are always trying to get you a complete service<br>
-                            You can view your dailly schedule, Reach Patients Appointment at home!<br><br>
+                            <h3>ကြိုဆိုပါတယ် ဒေါက်တာ <?php echo $username  ?></h3>
+                            <p>ကျွန်ုပ်တို့ဆေးခန်းတွင် ကုသပေးမှုအတွက် ကျေးဇူးတင်ပါသည်။<br>
+                            ဒေါက်တာ၏ကုသနိုင်မည့်အချိန်များကို ကြည့်ရှုနိုင်ပြီး လူနားများ၏ချိန်းဆိုမှုများ လက်ခံနိုင်ပါသည်။<br>
                             </p>
                             <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="width:30%">View My Appointments</button></a>
-                            <br>
-                            <br>
                         </td>
                     </tr>
                     </table>
