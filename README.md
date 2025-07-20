@@ -1,4 +1,6 @@
-# Clinic Booking Management System
+# Clinic Booking Management System [CBMS]
+# Online မှတစ်ဆင့် ‌ဆေးခန်းချိန်းဆို Appointment ဝန်ဆောင်မှုတစ်ခုဖြစ်သော CBMS စနစ်ဖြင့် အဆင်ပြေစွာ ဆေးကုသရန် 
+
 
 ![System Architecture](https://placehold.co/800x300?text=Clinic+System+Architecture)
 
