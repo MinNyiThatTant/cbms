@@ -71,22 +71,22 @@
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-dashbord">
-                        <a href="index.php" class="non-style-link-menu"><div><p class="menu-text">Dashboard</p></div></a>
+                        <a href="index.php" class="non-style-link-menu"><div><p class="menu-text">မူလစာမျက်နှာ</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-appoinment menu-active menu-icon-appoinment-active">
-                        <a href="appointment.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">My Appointments</p></div></a>
+                        <a href="appointment.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">ကျွနိုပ်၏ Appointments</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">My Sessions</p></div></a>
+                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">ကျွနိုပ်၏ Sessions</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-patient">
-                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">My Patients</p></div></a>
+                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">ကျွနိုပ်၏ လူနာများ</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">

@@ -124,7 +124,7 @@
                     
                             <td width="15%">
                                 <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                                    Today's Date
+                                    ယနေ့ ရက်စွဲ
                                 </p>
                                 <p class="heading-sub12" style="padding: 0;margin: 0;">
                                     <?php 
@@ -166,11 +166,11 @@
                                         <div class="btn-icon-back dashboard-icons-setting" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
                                         <div>
                                                 <div class="h1-dashboard">
-                                                    Account Settings  &nbsp;
+                                                    Account Settings/ အကောင့်ချိန်ညှိမှုများ  &nbsp;
 
                                                 </div><br>
                                                 <div class="h3-dashboard" style="font-size: 15px;">
-                                                    Edit your Account Details & Change Password
+                                                    Edit your Account Details & Change Password/ သင်၏အကောင့်အချက်အလက်များကို လျို့ဝှက်နံပါတ်ပြောင်းရန်
                                                 </div>
                                         </div>
                                                 
@@ -192,11 +192,11 @@
                                         <div class="btn-icon-back dashboard-icons-setting " style="background-image: url('../img/icons/view-iceblue.svg');"></div>
                                         <div>
                                                 <div class="h1-dashboard" >
-                                                    View Account Details
+                                                    View Account Details / အကောင့်အချက်အလက်များကိုကြည့်ရန်
                                                     
                                                 </div><br>
                                                 <div class="h3-dashboard"  style="font-size: 15px;">
-                                                    View Personal information About Your Account
+                                                    View Personal information About Your Account / သင့်အကောင့်အချက်အလက်များ
                                                 </div>
                                         </div>
                                                 

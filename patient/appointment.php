@@ -88,22 +88,22 @@
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-home">
-                        <a href="index.php" class="non-style-link-menu"><div><p class="menu-text">Home</p></div></a>
+                        <a href="index.php" class="non-style-link-menu"><div><p class="menu-text">မူလစာမျက်နှာ</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-doctor">
-                        <a href="doctors.php" class="non-style-link-menu"><div><p class="menu-text">All Doctors</p></div></a>
+                        <a href="doctors.php" class="non-style-link-menu"><div><p class="menu-text">ဆရာဝန်များ</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">Scheduled Sessions</p></div></a>
+                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">ဆေးခန်းအချိန်များ</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-appoinment menu-active menu-icon-appoinment-active">
-                        <a href="appointment.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">My Bookings</p></div></a>
+                        <a href="appointment.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">ကျွနိုပ်၏ Bookings</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
@@ -123,7 +123,7 @@
                         <p style="font-size: 23px;padding-left:12px;font-weight: 600;">My Bookings history</p>
                     </td>
                     <td width="15%">
-                        <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">Today's Date</p>
+                        <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">ယနေ့ ရက်စွဲ</p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php 
                             date_default_timezone_set('Asia/Yangon');
@@ -178,27 +178,27 @@
                                                         <div class="dashboard-items search-items">
                                                             <div style="width:100%;">
                                                                 <div class="h3-search">
-                                                                    Booking Date: ' . substr($appodate, 0, 30) . '<br>
-                                                                    Reference Number: OC-000-' . $appoid . '
+                                                                    Booking ရက်စွဲ :  ' . substr($appodate, 0, 30) . '<br>
+                                                                    Reference Number: CBMS-' . $appoid . '
                                                                 </div>
                                                                 <div class="h1-search">
                                                                     ' . substr($title, 0, 21) . '<br>
                                                                 </div>
                                                                 <div class="h3-search">
-                                                                    Appointment Number:<div class="h1-search">0' . $apponum . '</div>
+                                                                    Appointment Number/ တိုကင်နံပါတ် : <h2>0' . $apponum . '</h2>
                                                                 </div>
                                                                 <div class="h3-search">
-                                                                    ' . substr($docname, 0, 30) . '
-                                                                </div>
+                                                                    ဆရာဝန် အမည် ' . substr($docname, 0, 30) . '
+                                                                </div><br>
                                                                 <div class="h4-search">
-                                                                    Scheduled Date: ' . $scheduledate . '<br>Starts: <b>@' . substr($scheduletime, 0, 5) . '</b> (24h)
+                                                                    Scheduled Date/: ' . $scheduledate . '<br>Starts Time/စတင်ကုသချိန်: <b>@' . substr($scheduletime, 0, 5) . '</b> (24h)
                                                                 </div>
                                                                 <br>';
                                                 
                                                 // Check if the appointment is confirmed
                                                 if ($status === 'confirmed') {
                                                     echo '<button class="login-btn btn-primary-soft btn" style="padding-top:11px;padding-bottom:11px;width:100%" disabled>
-                                                            <font class="tn-in-text">Success</font>
+                                                            <font class="tn-in-text">အတည်ပြုပြီးပါပြီ။ သင်၏ email ကိုစစ်ဆေးပါ။</font>
                                                           </button>';
                                                 } else {
                                                     echo '<a href="?action=drop&id=' . $appoid . '&title=' . $title . '&doc=' . $docname . '">

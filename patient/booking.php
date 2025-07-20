@@ -206,7 +206,7 @@
                 </td>
                 <td width="15%">
                     <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                        Today's Date
+                        ယနေ့ ရက်စွဲ
                     </p>
                     <p class="heading-sub12" style="padding: 0;margin: 0;">
                         <?php
@@ -293,16 +293,16 @@
                                                             Session Details
                                                         </div><br><br>
                                                         <div class="h3-search" style="font-size:18px;line-height:30px">
-                                                            Doctor name:  &nbsp;&nbsp;<b>' . $docname . '</b><br>
-                                                            Doctor Email:  &nbsp;&nbsp;<b>' . $docemail . '</b> 
+                                                            ဒေါက်တာအမည် :  &nbsp;&nbsp;<b>' . $docname . '</b><br>
+                                                            ဒေါက်တာ Email:  &nbsp;&nbsp;<b>' . $docemail . '</b> 
                                                         </div>
                                                         <div class="h3-search" style="font-size:18px;">
                                                           
                                                         </div><br>
                                                         <div class="h3-search" style="font-size:18px;">
-                                                            Session Title: ' . $title . '<br>
-                                                            Session Scheduled Date: ' . $scheduledate . '<br>
-                                                            Session Starts : ' . $scheduletime . '<br>
+                                                            Session Title/ကုသမည့်အကြောင်းအရာ: ' . $title . '<br>
+                                                            Session Scheduled Date/ကုသမည့်ရက်စွဲ: ' . $scheduledate . '<br>
+                                                            Session Starts/ စတင်ကုသမည့်အချိန် : ' . $scheduletime . '<br>
 
                                                         </div>
                                                         <br>
@@ -319,7 +319,7 @@
                                             
                                                 <div style="width:100%;padding-top: 15px;padding-bottom: 15px;">
                                                         <div class="h1-search" style="font-size:20px;line-height: 35px;margin-left:8px;text-align:center;">
-                                                            Your Appointment Number
+                                                            ရနိုင်မည့် တိုကင် နံပါတ်
                                                         </div>
                                                         <center>
                                                         <div class=" dashboard-icons" style="margin-left: 0px;width:90%;font-size:70px;font-weight:800;text-align:center;color:var(--btnnictext);background-color: var(--btnice)">' . $apponum . '</div>

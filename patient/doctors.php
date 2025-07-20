@@ -71,23 +71,23 @@
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-home " >
-                        <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">Home</p></a></div></a>
+                        <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">မူလစာမျက်နှာ</p></a></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-doctor menu-active menu-icon-doctor-active">
-                        <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">All Doctors</p></a></div>
+                        <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">ဆရာဝန်များ</p></a></div>
                     </td>
                 </tr>
                 
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">Scheduled Sessions</p></div></a>
+                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">ဆေးခန်းအချိန်များ</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-appoinment">
-                        <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">My Bookings</p></a></div>
+                        <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">ကျွန်ုပ်၏ Bookings</p></a></div>
                     </td>
                 </tr>
                 <tr class="menu-row" >
@@ -108,7 +108,7 @@
                         
                         <form action="" method="post" class="header-search">
 
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email" list="doctors">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="‌ဒေါက်တာအမည်/email ဖြင့်ရှာဖွေနိုင်ပါသည်။" list="doctors">&nbsp;&nbsp;
                             
                             <?php
                                 echo '<datalist id="doctors">';
@@ -133,7 +133,7 @@
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            ယနေ့ ရက်စွဲ 
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php 
@@ -182,20 +182,20 @@
                                 <th class="table-headin">
                                     
                                 
-                                Doctor Name
+                                Doctor Name/ ဒေါက်တာအမည်
                                 
                                 </th>
                                 <th class="table-headin">
-                                    Email
+                                    Email/ အီးမေးလ်
                                 </th>
                                 <th class="table-headin">
                                     
-                                    Specialties
+                                    Specialties/ကျွမ်းကျင်မှု
                                     
                                 </th>
                                 <th class="table-headin">
                                     
-                                    Events
+                                    Action / လုပ်ဆောင်ချက်များ
                                     
                                 </tr>
                         </thead>

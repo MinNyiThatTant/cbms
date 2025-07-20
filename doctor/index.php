@@ -82,23 +82,23 @@
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-dashbord menu-active menu-icon-dashbord-active" >
-                        <a href="index.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">Dashboard</p></a></div></a>
+                        <a href="index.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">မူလစာမျက်နှာ</p></a></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-appoinment">
-                        <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">My Appointments</p></a></div>
+                        <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">ကျွန်ုပ်၏ Appointments</p></a></div>
                     </td>
                 </tr>
                 
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">My Sessions</p></div></a>
+                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">ကျွန်ုပ်၏ Sessions</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-patient">
-                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">My Patients</p></a></div>
+                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">ကျွနိုပ်၏ Patients</p></a></div>
                     </td>
                 </tr>
                 <tr class="menu-row" >
@@ -123,7 +123,7 @@
                             </td>
                             <td width="15%">
                                 <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                                    Today's Date
+                                    ယနေ့ ရက်စွဲ
                                 </p>
                                 <p class="heading-sub12" style="padding: 0;margin: 0;">
                                     <?php 
@@ -156,7 +156,7 @@
                         <td style="text-align: center;">
                             <h3>ကြိုဆိုပါတယ် ဒေါက်တာ <b style="color: green;"><?php echo $username  ?></b></h3>
                             <p><b>ကျွန်ုပ်တို့ဆေးခန်းတွင် ကုသပေးမှုအတွက် ကျေးဇူးတင်ပါသည်။<br>
-                            ဒေါက်တာ၏ကုသနိုင်မည့်အချိန်များကို ကြည့်ရှုနိုင်ပြီး လူနားများ၏ချိန်းဆိုမှုများ လက်ခံနိုင်ပါသည်။</b><br>
+                            ဒေါက်တာ၏ ဆေးကုသချိန်များကို ကြည့်ရှုနိုင်ပြီး လူနာများ၏ချိန်းဆိုမှုများကို လက်ခံနိုင်ပါသည်။</b><br>
                             </p>
                             <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="width:30%">View My Appointments</button></a>
                         </td>
