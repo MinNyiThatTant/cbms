@@ -21,6 +21,9 @@
         .sub-table{
             animation: transitionIn-Y-bottom 0.5s;
         }
+        input{
+            background-color: aqua;
+        }
     </style>
     
     
@@ -82,23 +85,23 @@
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-home " >
-                        <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">Home</p></a></div></a>
+                        <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">မူလစာမျက်နှာ</p></a></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-doctor">
-                        <a href="doctors.php" class="non-style-link-menu"><div><p class="menu-text">All Doctors</p></a></div>
+                        <a href="doctors.php" class="non-style-link-menu"><div><p class="menu-text">ဆရာဝန်များ</p></a></div>
                     </td>
                 </tr>
                 
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">Scheduled Sessions</p></div></a>
+                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">ဆေးခန်းအချိန်များ</p></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-appoinment">
-                        <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">My Bookings</p></a></div>
+                        <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">ကျွနိုပ်၏ Bookings</p></a></div>
                     </td>
                 </tr>
                 <tr class="menu-row" >
@@ -221,7 +224,7 @@
                                                     
                                                 </div><br>
                                                 <div class="h3-dashboard"  style="font-size: 15px;">
-                                                    Will Permanently Remove your Account
+                                                    Will Permanently Remove your Account? / သင်၏အကောင့်ကို အပြီးတိုင် ဖျက်ပစ်မည်လား?
                                                 </div>
                                         </div>
                                                 
@@ -285,34 +288,31 @@
                     <center>
                         <h2></h2>
                         <a class="close" href="settings.php">&times;</a>
-                        <div class="content">
-                            CBMS Web App<br>
-                            
-                        </div>
+                        
                         <div style="display: flex;justify-content: center;">
                         <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
                         
                             <tr>
                                 <td>
-                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details.</p><br><br>
+                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500; color:blue;">အချက်အလက်များ</p><br>
                                 </td>
                             </tr>
                             
                             <tr>
                                 
                                 <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Name: </label>
+                                    <label for="name" class="form-label">အမည် :  </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    '.$name.'<br><br>
+                                    <b>'.$name.'<b><br>
                                 </td>
                                 
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Email" class="form-label">Email: </label>
+                                    <label for="Email" class="form-label">Email / အီးမေးလ် : </label>
                                 </td>
                             </tr>
                             <tr>
@@ -322,7 +322,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">NIC: </label>
+                                    <label for="nic" class="form-label">NIC / မှတ်ပုံတင်နံပါတ် : </label>
                                 </td>
                             </tr>
                             <tr>
@@ -332,7 +332,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Tele" class="form-label">Telephone: </label>
+                                    <label for="Tele" class="form-label">Telephone / တယ်လီဖုန်းနံပါတ် : </label>
                                 </td>
                             </tr>
                             <tr>
@@ -342,7 +342,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="spec" class="form-label">Address: </label>
+                                    <label for="spec" class="form-label">Address/နေရပ်လိပ်စာ : </label>
                                     
                                 </td>
                             </tr>
@@ -353,7 +353,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="spec" class="form-label">Date of Birth: </label>
+                                    <label for="spec" class="form-label">Date of Birth / မွေးသက္ကရာဇ် : </label>
                                     
                                 </td>
                             </tr>
@@ -422,14 +422,14 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit User Account Details.</p>
-                                        User ID : '.$id.' (Auto Generated)<br><br>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit User Account သင်၏အကောင့်ကို ပြင်ဆင်ရန် </p>
+                                        User ID : '.$id.' (သင်၏ ID အမှတ်စဉ်နံပါ)<br><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
                                             <form action="edit-user.php" method="POST" class="add-new-form">
-                                            <label for="Email" class="form-label">Email: </label>
+                                            <label for="Email" class="form-label">Email / အီးမေးလ်: </label>
                                             <input type="hidden" value="'.$id.'" name="id00">
                                         </td>
                                     </tr>
@@ -442,7 +442,7 @@
                                     <tr>
                                         
                                         <td class="label-td" colspan="2">
-                                            <label for="name" class="form-label">Name: </label>
+                                            <label for="name" class="form-label">Name / အမည် : </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -454,7 +454,7 @@
                                     
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="nic" class="form-label">NIC: </label>
+                                            <label for="nic" class="form-label">NIC / မှတ်ပုံတင်နံပါတ် : </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -464,7 +464,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="Tele" class="form-label">Telephone: </label>
+                                            <label for="Tele" class="form-label">Telephone / တယ်လီဖုန်းနံပါတ် : </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -474,7 +474,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="spec" class="form-label">Address</label>
+                                            <label for="spec" class="form-label">Address / နေရပ်လိပ်စာ : </label>
                                             
                                         </td>
                                     </tr>
@@ -485,7 +485,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="password" class="form-label">Password: </label>
+                                            <label for="password" class="form-label">Password / လျို့ဝှက်နံပါတ် : </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -494,7 +494,7 @@
                                         </td>
                                     </tr><tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="cpassword" class="form-label">Conform Password: </label>
+                                            <label for="cpassword" class="form-label">Conform Password / လျို့ဝှက်နံပါတ်အတည်ပြုရန် : </label>
                                         </td>
                                     </tr>
                                     <tr>

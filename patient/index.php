@@ -214,7 +214,7 @@
                                         <table class="filter-container" style="border: none;" border="0">
                                             <tr>
                                                 <td colspan="4">
-                                                    <p style="font-size: 20px;font-weight:600;padding-left: 12px;">Status</p>
+                                                    <p style="font-size: 20px;font-weight:600;padding-left: 12px;">CBMS Clinic ၏လက်ရှိအခြေအနေများ</p>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -225,7 +225,7 @@
                                                                     <?php    echo $doctorrow->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard">
-                                                                    ဆရာဝန်အရေအတွက် &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    ဆရာဝန်များ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
@@ -238,7 +238,7 @@
                                                                     <?php    echo $patientrow->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard">
-                                                                    လူနာ
+                                                                    လူနာများ
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/patients-hover.svg');"></div>
@@ -253,7 +253,7 @@
                                                                     <?php    echo $appointmentrow ->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard" >
-                                                                    Bookingများ &nbsp;&nbsp;
+                                                                    လက်ရှိBookingယူထားမှုများ &nbsp;&nbsp;
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/book-hover.svg');"></div>
@@ -291,7 +291,7 @@
 
 
                             
-                                    <p style="font-size: 20px;font-weight:600;padding-left: 40px;" class="anime">Your Upcoming Booking</p>
+                                    <p style="font-size: 20px;font-weight:600;padding-left: 40px;" class="anime">သင်၏ Booking များ</p>
                                     <center>
                                         <div class="abc scroll" style="height: 250px;padding: 0;margin: 0;">
                                         <table width="85%" class="sub-table scrolldown" border="0" >

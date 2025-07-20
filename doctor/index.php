@@ -186,7 +186,7 @@
                                                                     <?php    echo $doctorrow->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard">
-                                                                    All Doctors &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    ဆရာဝန်များ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
@@ -199,7 +199,7 @@
                                                                     <?php    echo $patientrow->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard">
-                                                                    All Patients &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    လူနာများ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/patients-hover.svg');"></div>
@@ -214,7 +214,7 @@
                                                                     <?php    echo $appointmentrow ->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard" >
-                                                                    NewBooking &nbsp;&nbsp;
+                                                                    လက်ရှိBookingယူထားမှုများ &nbsp;&nbsp;
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/book-hover.svg');"></div>
@@ -229,7 +229,7 @@
                                                                     <?php    echo $schedulerow ->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard" style="font-size: 15px">
-                                                                    Today Sessions
+                                                                    ယနေ့‌ဆေးခန်းပြချိန်များ
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/session-iceblue.svg');"></div>
