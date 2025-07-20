@@ -71,23 +71,23 @@
              </tr>
              <tr class="menu-row" >
                  <td class="menu-btn menu-icon-dashbord " >
-                     <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">Dashboard</p></a></div></a>
+                     <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">မူလစာမျက်နှာ</p></a></div></a>
                  </td>
              </tr>
              <tr class="menu-row">
                  <td class="menu-btn menu-icon-appoinment  ">
-                     <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">My Appointments</p></a></div>
+                     <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">ကျွန်ုပ်၏ Appointments</p></a></div>
                  </td>
              </tr>
              
              <tr class="menu-row" >
                  <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
-                     <a href="schedule.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">My Sessions</p></div></a>
+                     <a href="schedule.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">ကျွန်ုပ်၏ Sessions</p></div></a>
                  </td>
              </tr>
              <tr class="menu-row" >
                  <td class="menu-btn menu-icon-patient">
-                     <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">My Patients</p></a></div>
+                     <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">ကျွန်ုပ်၏ လူနာများ</p></a></div>
                  </td>
              </tr>
              <tr class="menu-row" >
@@ -105,12 +105,12 @@
                     <a href="schedule.php" ><button  class="login-btn btn-primary-soft btn btn-icon-back"  style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Back</font></button></a>
                     </td>
                     <td>
-                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">My Sessions</p>
+                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;"> Sessions</p>
                                            
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            ယနေ့ ရက်စွဲ
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php 
@@ -136,7 +136,7 @@
                 <tr>
                     <td colspan="4" style="padding-top:10px;width: 100%;" >
                     
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">My Sessions (<?php echo $list110->num_rows; ?>) </p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">ကျွန်ုပ်၏ Sessions (<?php echo $list110->num_rows; ?>) </p>
                     </td>
                     
                 </tr>

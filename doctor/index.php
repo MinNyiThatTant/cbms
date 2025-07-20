@@ -98,7 +98,7 @@
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-patient">
-                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">ကျွနိုပ်၏ Patients</p></a></div>
+                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">ကျွနိုပ်၏ လူနာများ</p></a></div>
                     </td>
                 </tr>
                 <tr class="menu-row" >
@@ -241,7 +241,7 @@
                                     </center>
                                 </td>
                                 <td>
-                                    <p id="anim" style="font-size: 20px;font-weight:600;padding-left: 40px;">Your Up Coming Sessions until Next week</p>
+                                    <p id="anim" style="font-size: 20px;font-weight:600;padding-left: 40px;">လာမည့်ရက်သတ္တပတ်အတွက် ဒေါက်တာ၏အချိန်များ</p>
                                     <center>
                                         <div class="abc scroll" style="height: 250px;padding: 0;margin: 0;">
                                         <table width="85%" class="sub-table scrolldown" border="0" >

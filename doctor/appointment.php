@@ -106,7 +106,7 @@
                         <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Appointment Manager</p>
                     </td>
                     <td width="15%">
-                        <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">Today's Date</p>
+                        <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">ယနေ့ ရက်စွဲ</p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php 
                             date_default_timezone_set('Asia/Yangon');
@@ -122,7 +122,7 @@
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top:10px;width: 100%;">
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">My Appointments (<?php echo $list110->num_rows; ?>)</p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">ကျွန်ုပ်၏ Appointments (<?php echo $list110->num_rows; ?>)</p>
                     </td>
                 </tr>
                 <tr>
