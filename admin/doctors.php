@@ -148,7 +148,7 @@
                
                 <tr >
                     <td style="padding-top:30px;">
-                        <div class="heading-main12" style="margin-left: 25px;font-size:20px;color:rgb(49, 49, 49);">ဆရာဝန်ထည့်ရန်</div>
+                        <div class="heading-main12" style="margin-left: 25px;font-size:20px;color:rgb(49, 49, 49);">ဆရာဝန်ထည့်ပါ</div>
                     </td>
                     <td colspan="2">
                         <a href="?action=add&id=none&error=0" class="non-style-link"><button  class="login-btn btn-primary btn button-icon"  style="display: flex;justify-content: center;align-items: center;margin-left:75px;background-image: url('../img/icons/add.svg');">Add New</font></button>

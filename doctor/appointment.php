@@ -176,7 +176,7 @@
                                 <th class="table-headin">Session Title</th>
                                 <th class="table-headin">Session Date & Time</th>
                                 <th class="table-headin">Appointment Date</th>
-                                <th class="table-headin">Events</th>
+                                <th class="table-headin">Action</th>
                             </tr>
                         </thead>
                         <tbody>

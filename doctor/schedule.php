@@ -209,13 +209,13 @@
                                 </th>
                                 <th class="table-headin">
                                     
-                                Max num that can be booked
+                                Max num can be booked
                                     
                                 </th>
                                 
                                 <th class="table-headin">
                                     
-                                    Events
+                                    Action
                                     
                                 </tr>
                         </thead>

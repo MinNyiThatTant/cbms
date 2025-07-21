@@ -104,7 +104,7 @@
                         
                         <form action="" method="post" class="header-search">
 
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Patient name or Email" list="patient">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="လူနာအမည်/email ဖြင့်ရှာနိုင်ပါသည်။" list="patient">&nbsp;&nbsp;
                             
                             <?php
                                 echo '<datalist id="patient">';
@@ -203,7 +203,7 @@
                                 </th>
                                 <th class="table-headin">
                                     
-                                    Events
+                                    Action
                                     
                                 </tr>
                         </thead>

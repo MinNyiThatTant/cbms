@@ -165,7 +165,7 @@
                         </td>
                         <td width="30%">
                         <select name="docid" id="" class="box filter-container-items" style="width:90% ;height: 37px;margin: 0;" >
-                            <option value="" disabled selected hidden>Choose Doctor Name from the list</option><br/>
+                            <option value="" disabled selected hidden>ဆရာဝန်ရွေးရန်</option><br/>
                                 
                             <?php 
                             
@@ -262,13 +262,13 @@
                                 </th>
                                 <th class="table-headin">
                                     
-                                Max num that can be booked
+                                Max num can be booked
                                     
                                 </th>
                                 
                                 <th class="table-headin">
                                     
-                                    Events
+                                    Action
                                     
                                 </tr>
                         </thead>
