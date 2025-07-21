@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `aemail` varchar(255) NOT NULL,
   `apassword` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ;
 
 --
 -- Dumping data for table `admin`
@@ -52,7 +52,7 @@ CREATE TABLE `appointment` (
   `scheduleid` int(10) DEFAULT NULL,
   `appodate` date DEFAULT NULL,
   `status` enum('pending','confirmed','canceled') DEFAULT 'pending'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `appointment`
@@ -126,7 +126,7 @@ CREATE TABLE `doctor` (
   `docnic` varchar(15) DEFAULT NULL,
   `doctel` varchar(15) DEFAULT NULL,
   `specialties` int(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `doctor`
@@ -159,7 +159,7 @@ CREATE TABLE `patient` (
   `fever` enum('yes','no') DEFAULT NULL,
   `other_symptoms` text DEFAULT NULL,
   `questionnaire_date` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patient`
@@ -186,7 +186,7 @@ CREATE TABLE `schedule` (
   `scheduledate` date DEFAULT NULL,
   `scheduletime` time DEFAULT NULL,
   `nop` int(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedule`
@@ -204,7 +204,7 @@ INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `schedul
 CREATE TABLE `specialties` (
   `id` int(2) NOT NULL,
   `sname` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `specialties`
@@ -277,7 +277,7 @@ INSERT INTO `specialties` (`id`, `sname`) VALUES
 CREATE TABLE `webuser` (
   `email` varchar(255) NOT NULL,
   `usertype` char(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `webuser`
