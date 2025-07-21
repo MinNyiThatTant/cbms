@@ -29,7 +29,7 @@ if ($_POST) {
     // Execute the query
     if ($database->query($sql) === TRUE) {
         header("location: schedule.php?action=session-added&title=$title");
-        exit(); // It's a good practice to call exit after a header redirect
+        exit(); // to call exit after a header redirect
     } else {
         echo "Error: " . $sql . "<br>" . $database->error; // Display error if query fails
     }
