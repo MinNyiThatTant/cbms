@@ -251,51 +251,53 @@
 
 
                                         if (isset($_GET["id"])) {
+    $id = $_GET["id"];
 
+    // Updated SQL query to include specialties
+    $sqlmain = "SELECT schedule.*, doctor.docname, doctor.docemail, specialties.sname 
+                FROM schedule 
+                INNER JOIN doctor ON schedule.docid = doctor.docid 
+                INNER JOIN specialties ON doctor.specialties = specialties.id 
+                WHERE schedule.scheduleid = ? 
+                ORDER BY schedule.scheduledate DESC";
+    
+    $stmt = $database->prepare($sqlmain);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-                                            $id = $_GET["id"];
+    if ($row = $result->fetch_assoc()) {
+        $scheduleid = $row["scheduleid"];
+        $title = $row["title"];
+        $docname = $row["docname"];
+        $docemail = $row["docemail"];
+        $scheduledate = $row["scheduledate"];
+        $scheduletime = $row["scheduletime"];
+        $sname = $row["sname"]; // Fetching the specialty name
 
-                                            $sqlmain = "select * from schedule inner join doctor on schedule.docid=doctor.docid where schedule.scheduleid=? order by schedule.scheduledate desc";
-                                            $stmt = $database->prepare($sqlmain);
-                                            $stmt->bind_param("i", $id);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-                                            //echo $sqlmain;
-                                            $row = $result->fetch_assoc();
-                                            $scheduleid = $row["scheduleid"];
-                                            $title = $row["title"];
-                                            $docname = $row["docname"];
-                                            $docemail = $row["docemail"];
-                                            $scheduledate = $row["scheduledate"];
-                                            $scheduletime = $row["scheduletime"];
-                                            $sql2 = "select * from appointment where scheduleid=$id";
-                                            //echo $sql2;
-                                            $result12 = $database->query($sql2);
-                                            $apponum = ($result12->num_rows) + 1;
+        $sql2 = "SELECT * FROM appointment WHERE scheduleid = ?";
+        $stmt2 = $database->prepare($sql2);
+        $stmt2->bind_param("i", $id);
+        $stmt2->execute();
+        $result12 = $stmt2->get_result();
+        $apponum = ($result12->num_rows) + 1;
 
-                                            echo '
-                                        <form action="booking-complete.php" method="post">
-                                            <input type="hidden" name="scheduleid" value="' . $scheduleid . '" >
-                                            <input type="hidden" name="apponum" value="' . $apponum . '" >
-                                            <input type="hidden" name="date" value="' . $today . '" >
-
-                                        
-                                    
-                                    ';
-
-
-                                            echo '
-                                    <td style="width: 50%;" rowspan="2">
-                                            <div  class="dashboard-items search-items"  >
-                                            
-                                                <div style="width:100%">
-                                                        <div class="h1-search" style="font-size:25px;">
-                                                            Session Details
-                                                        </div><br><br>
-                                                        <div class="h3-search" style="font-size:18px;line-height:30px">
-                                                            ဒေါက်တာအမည် :  &nbsp;&nbsp;<b>' . $docname . '</b><br>
-                                                            ဒေါက်တာ Email:  &nbsp;&nbsp;<b>' . $docemail . '</b> 
-                                                        </div>
+        echo '
+        <form action="booking-complete.php" method="post">
+            <input type="hidden" name="scheduleid" value="' . $scheduleid . '" >
+            <input type="hidden" name="apponum" value="' . $apponum . '" >
+            <input type="hidden" name="date" value="' . $today . '" >
+            <td style="width: 50%;" rowspan="2">
+                <div class="dashboard-items search-items">
+                    <div style="width:100%">
+                        <div class="h1-search" style="font-size:25px;">
+                            Session Details
+                        </div><br><br>
+                        <div class="h3-search" style="font-size:18px;line-height:30px">
+                            ဒေါက်တာအမည် : &nbsp;&nbsp;<b>' . $docname . '</b><br>
+                            ဒေါက်တာ Email: &nbsp;&nbsp;<b>' . $docemail . '</b><br>
+                            အထူးပြု   : &nbsp;&nbsp;<b>' . $sname . '</b><br> <!-- Displaying the specialty name -->
+                        </div>
                                                         <div class="h3-search" style="font-size:18px;">
                                                           
                                                         </div><br>
@@ -343,6 +345,7 @@
                                         ';
                                         }
                                     }
+                                }
 
                                     ?>
 
