@@ -15,16 +15,13 @@
 
 ## System Overview
 
-The Clinic Booking Management System (CBMS) is an online platform designed to facilitate seamless appointment scheduling for patients seeking medical care. The system allows patients to book appointments with doctors and manage their accounts efficiently. 
+The Clinic Booking Management System (CBMS) is an webpage for patients to easily schedule appointments with doctors and manage their accounts.
 
-Key features of CBMS include:
-- User-friendly interface for easy navigation
-- Secure authentication for patients and doctors
-- Real-time appointment scheduling and management
-- Email notifications for appointment confirmations and reminders
-- Administrative controls for managing doctors and patient records
-
-CBMS aims to enhance the patient experience by providing a convenient and efficient way to access healthcare services.
+- User-friendly interface
+- Secure login
+- Real-time appointment scheduling
+- Email notifications
+- Admin controls for managing records
 
 ## Database Schema
 
@@ -40,11 +37,11 @@ The CBMS database consists of tables that store information;
 
 ## Email Notifications
 
-### Email Sending Mechanism
-- The system uses SMTP service via **Mailtrap.io** to send notifications. Mailtrap is a reliable email service provider that allows for safe testing and debugging of email sending without sending real emails to users.
-- This ensures timely delivery and proper formatting of emails while keeping the development environment secure.
+### Email System
+- The system uses SMTP via **Mailtrap.io** to send notifications, testing without sending real emails.
+- This ensures timely delivery and formatting.
 
-## Role
+## Roles
 
 ### Admin
   
@@ -70,8 +67,6 @@ The CBMS database consists of tables that store information;
   - Edit account settings
 
 ## Installation
-
-To install the Clinic Booking Management System (CBMS), follow these steps:
 
 ### Prerequisites
 - Xampp for web server (e.g., Apache, MySQL)
