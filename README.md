@@ -68,3 +68,12 @@ The CBMS database consists of tables that store information;
   - View their old booking
   - Delete account
   - Edit account settings
+
+## Installation
+
+To install the Clinic Booking Management System (CBMS), follow these steps:
+
+### Prerequisites
+- Xampp for web server (e.g., Apache, MySQL)
+- PHP version 7.4 or higher
+- MySQL or MariaDB database
