@@ -2,7 +2,7 @@
 ## Online မှတစ်ဆင့် ‌ဆေးခန်းချိန်းဆို Appointment ဝန်ဆောင်မှုတစ်ခုဖြစ်သော CBMS စနစ်ဖြင့် အဆင်ပြေစွာ ဆေးကုသရန် ရည်ရွယ်ပါသည်။
 
 
-![CBMS](https://github.com/minnyithattant/cbms/img/bg-big.jpg)
+![CBMS](https://github.com/MinNyiThatTant/cbms/tree/main/img/bg-big.jpg)
 
 ## Table of Contents
 1. [System Overview](#system-overview)
