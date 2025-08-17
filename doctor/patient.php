@@ -299,6 +299,7 @@
                                     $nic=$row["pnic"];
                                     $dob=$row["pdob"];
                                     $tel=$row["ptel"];
+                                    $feeling =$row["feeling"];
                                     
                                     echo '<tr>
                                         <td> &nbsp;'.
@@ -315,6 +316,9 @@
                                          </td>
                                         <td>
                                         '.substr($dob,0,10).'
+                                        </td>
+                                        <td>
+                                        '.substr($feeling,0,10).'
                                         </td>
                                         <td >
                                         <div style="display:flex;justify-content: center;">
@@ -357,6 +361,7 @@
             $dob=$row["pdob"];
             $tele=$row["ptel"];
             $address=$row["paddress"];
+            $feeling =$row["feeling"];
             echo '
             <div id="popup1" class="overlay">
                     <div class="popup">
@@ -437,6 +442,17 @@
                             <tr>
                             <td class="label-td" colspan="2">
                             '.$address.'<br><br>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <label for="spec" class="form-label">Feeling: </label>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                            <td class="label-td" colspan="2">
+                            '.$feeling.'<br><br>
                             </td>
                             </tr>
                             <tr>

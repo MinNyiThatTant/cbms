@@ -48,52 +48,61 @@
         $email = $_POST['useremail'];
         $password = $_POST['userpassword'];
 
-        // $password = password_hash($plainPassword, PASSWORD_DEFAULT);
-        // $error = '<label for="promter" class="form-label"></label>';
-
+        // Check if the email exists
         $result = $database->query("SELECT * FROM webuser WHERE email='$email'");
         if ($result->num_rows == 1) {
             $utype = $result->fetch_assoc()['usertype'];
             if ($utype == 'p') {
                 // Check if the patient exists
-                $checker = $database->query("SELECT * FROM patient WHERE pemail='$email' AND ppassword='$password'");
+                $checker = $database->query("SELECT * FROM patient WHERE pemail='$email'");
                 if ($checker->num_rows == 1) {
                     $patientData = $checker->fetch_assoc();
                     
-                    // Store patient ID in session
-                    $_SESSION['patient_id'] = $patientData['pid']; // Assuming 'pid' is the patient ID
-                    $_SESSION['usertype'] = 'p';
-                    $_SESSION['user'] = $email;
-                    
-                    // DEBUG: Check what's being stored in session
-                    echo "<pre>AFTER LOGIN - SESSION DATA:\n"; 
-                    print_r($_SESSION); 
-                    echo "</pre>";
-                    // exit(); // Temporary - remove after debugging
+                    // Verify password
+                    if (password_verify($password, $patientData['ppassword'])) { // Use 'ppassword' to match the hashed password
+                        // Store patient ID in session
+                        $_SESSION['patient_id'] = $patientData['pid']; // Assuming 'pid' is the patient ID
+                        $_SESSION['usertype'] = 'p';
+                        $_SESSION['user'] = $email;
 
-                    // Redirect to the questionnaire page
-                    header('location: patient/question.php'); // Redirect to the questionnaire page
-                    exit();
+                        // Redirect to the questionnaire page
+                        header('location: patient/question.php'); // Redirect to the questionnaire page
+                        exit();
+                    } else {
+                        $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
+                    }
                 } else {
                     $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
                 }
             } elseif ($utype == 'a') {
                 // Admin login
-                $checker = $database->query("SELECT * FROM admin WHERE aemail='$email' AND apassword='$password'");
+                $checker = $database->query("SELECT * FROM admin WHERE aemail='$email'");
                 if ($checker->num_rows == 1) {
-                    $_SESSION['user'] = $email;
-                    $_SESSION['usertype'] = 'a';
-                    header('location: admin/index.php');
+                    $adminData = $checker->fetch_assoc();
+                    if (password_verify($password, $adminData['apassword'])) { // Use 'apassword' to match the hashed password
+                        $_SESSION['user'] = $email;
+                        $_SESSION['usertype'] = 'a';
+                        header('location: admin/index.php');
+                        exit();
+                    } else {
+                        $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
+                    }
                 } else {
                     $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
                 }
             } elseif ($utype == 'd') {
                 // Doctor login
-                $checker = $database->query("SELECT * FROM doctor WHERE docemail='$email' AND docpassword='$password'");
+                $checker = $database->query("SELECT * FROM doctor WHERE docemail='$email'");
                 if ($checker->num_rows == 1) {
-                    $_SESSION['user'] = $email;
-                    $_SESSION['usertype'] = 'd';
-                    header('location: doctor/index.php');
+                    $doctorData = $checker->fetch_assoc();
+                    if (password_verify($password, $doctorData['docpassword'])) { // Use 'docpassword' to match the hashed password
+                        $_SESSION['user'] = $email;
+                        $_SESSION['usertype'] = 'd';
+                        header('location: doctor/index.php');
+                        exit();
+                    } else {
+                        $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
+                    }
                 } else {
                     $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
                 }
@@ -144,7 +153,7 @@
                     </tr>
                     <tr>
                         <td colspan="2"><br>
-                            <?php echo $error ?>
+                            <?php if (isset($error)) echo $error; ?>
                         </td>
                     </tr>
                     <tr>

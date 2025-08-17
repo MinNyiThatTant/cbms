@@ -25,7 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $stmt = $database->prepare("UPDATE patient SET feeling=?, headache=?, fever=?, other_symptoms=? WHERE pid=?");
         $stmt->bind_param("ssssi", $feeling, $headache, $fever, $other_symptoms, $pid);
-        
+
+
         if ($stmt->execute()) {
 
             $_SESSION['questionnarie_completed'] = true;

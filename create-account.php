@@ -57,7 +57,9 @@ if ($_POST) {
     $cpassword = $_POST['cpassword'];
 
     if ($newpassword == $cpassword) {
+        $hashedPassword = password_hash($newpassword, PASSWORD_DEFAULT);
         // Check if the email already exists
+
         $sqlmain = "SELECT * FROM webuser WHERE email = ?;";
         $stmt = $database->prepare($sqlmain);
         $stmt->bind_param("s", $email);
@@ -69,7 +71,7 @@ if ($_POST) {
         } else {
             // Insert new patient and webuser
             $stmt = $database->prepare("INSERT INTO patient (pemail, pname, ppassword, paddress, pnic, pdob, ptel) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssss", $email, $name, $newpassword, $address, $nic, $dob, $tele);
+            $stmt->bind_param("sssssss", $email, $name, $hashedPassword, $address, $nic, $dob, $tele);
             $stmt->execute();
 
             $stmt = $database->prepare("INSERT INTO webuser (email, usertype) VALUES (?, 'p')");
