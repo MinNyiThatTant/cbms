@@ -7,16 +7,44 @@
 ## Table of Contents
 1. [System Overview](#system-overview)
 2. [Database Schema](#database-schema)
-3. [Authentication System](#authentication-system)
-4. [Booking Management](#booking-management)
-5. [Email Notifications](#email-notifications)
-6. [Frontend Components](#frontend-components)
-8. [Role](#role)
-9. [Installation](#installation)
+3. [Email Notifications](#email-notifications)
+4. [Role](#role)
+5. [Installation](#installation)
 
 ---
 
 ## System Overview
+
+The Clinic Booking Management System (CBMS) is an online platform designed to facilitate seamless appointment scheduling for patients seeking medical care. The system allows patients to book appointments with doctors and manage their accounts efficiently. 
+
+Key features of CBMS include:
+- User-friendly interface for easy navigation
+- Secure authentication for patients and doctors
+- Real-time appointment scheduling and management
+- Email notifications for appointment confirmations and reminders
+- Administrative controls for managing doctors and patient records
+
+CBMS aims to enhance the patient experience by providing a convenient and efficient way to access healthcare services.
+
+## Database Schema
+
+The CBMS database consists of tables that store information;
+- admin
+- appointment
+- schedule
+- patients
+- doctors
+- booking
+- usertype
+- specialities 
+
+## Email Notifications
+
+### Email Sending Mechanism
+- The system uses SMTP service via **Mailtrap.io** to send notifications. Mailtrap is a reliable email service provider that allows for safe testing and debugging of email sending without sending real emails to users.
+- This ensures timely delivery and proper formatting of emails while keeping the development environment secure.
+
+## Role
 
 ### Admin
   
@@ -27,7 +55,7 @@
     
 ### Doctors
 
-- View their Appointment
+- Manage(confirm/cancel) their Appointment
 - View their scheduled sessions
 - View details of patients
 - Delete account    
@@ -35,7 +63,7 @@
         
 ### Patiens(Clients)
   
-  - Make appointment online
+  - Make appointment 
   - Create accounts themselves
   - View their old booking
   - Delete account
