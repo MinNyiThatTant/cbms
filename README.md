@@ -58,7 +58,7 @@ The CBMS database consists of tables that store information;
 - Delete account    
 - Edit account settings
         
-### Patiens(Clients)
+### Patients
   
   - Make appointment 
   - Create accounts themselves
