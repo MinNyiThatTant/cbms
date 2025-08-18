@@ -20,21 +20,24 @@
 </head>
 <body>
     <?php
+    // Start the session at the very beginning to ensure session variables are available
     session_start();
 
-    if (isset($_SESSION["user"])) {
-        if ($_SESSION["user"] == "" || $_SESSION['usertype'] != 'p') {
-            header("location: ../login.php");
-        } else {
-            $useremail = $_SESSION["user"];
-        }
-    } else {
+    // Check if user is logged in properly - moved this check to only redirect if directly accessing the file
+    if (!isset($_SESSION["user"]) || $_SESSION["user"] == "" || $_SESSION['usertype'] != 'p') {
+        // Store requested URL before redirecting to login
+        $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
         header("location: ../login.php");
         exit();
-    }
-
-    // Import database
+    } 
+    
+    // If logged in, get user details
+    $useremail = $_SESSION["user"];
+    
+    // Import database connection
     include("../connection.php");
+    
+    // Prepare SQL to get patient details
     $sqlmain = "SELECT * FROM patient WHERE pemail=?";
     $stmt = $database->prepare($sqlmain);
     $stmt->bind_param("s", $useremail);
@@ -44,7 +47,7 @@
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
 
-    // Fetch appointments
+    // Base SQL query to get appointments
     $sqlmain = "SELECT appointment.appoid, schedule.scheduleid, schedule.title, doctor.docname, 
                 patient.pname, schedule.scheduledate, schedule.scheduletime, 
                 appointment.apponum, appointment.appodate, appointment.status 
@@ -54,13 +57,13 @@
                 INNER JOIN doctor ON schedule.docid=doctor.docid 
                 WHERE patient.pid=$userid";
 
-    if ($_POST) {
-        if (!empty($_POST["sheduledate"])) {
-            $sheduledate = $_POST["sheduledate"];
-            $sqlmain .= " AND schedule.scheduledate='$sheduledate'";
-        }
+    // Add date filter if submitted via POST
+    if ($_POST && !empty($_POST["sheduledate"])) {
+        $sheduledate = $_POST["sheduledate"];
+        $sqlmain .= " AND schedule.scheduledate='$sheduledate'";
     }
 
+    // Order by appointment date and execute query
     $sqlmain .= " ORDER BY appointment.appodate ASC";
     $result = $database->query($sqlmain);
     ?>
@@ -115,7 +118,7 @@
             </table>
         </div>
         <div class="dash-body">
-            <table border="0" width="100%" style="border-spacing: 0;margin:0;padding:0;margin-top:25px;">
+            <table border="0" width="100%" style="border-spacing: 0;margin: 0;padding: 0;margin-top: 25px;">
                 <tr>
                     <td width="13%">
                         <a href="appointment.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Back</font></button></a>
@@ -128,8 +131,7 @@
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php 
                             date_default_timezone_set('Asia/Yangon');
-                            $today = date('Y-m-d');
-                            echo $today;
+                            echo date('Y-m-d');
                             ?>
                         </p>
                     </td>
@@ -172,8 +174,11 @@
                                                 $scheduletime = $row["scheduletime"];
                                                 $apponum = $row["apponum"];
                                                 $appodate = $row["appodate"];
-                                                $status = $row["status"]; // Get the status of the appointment
+                                                $status = $row["status"];
 
+                                                // URL encode parameters for the cancel link
+                                                $cancel_link = htmlspecialchars("?action=drop&id=$appoid&title=".urlencode($title)."&doc=".urlencode($docname));
+                                                
                                                 echo '<tr>
                                                     <td style="width: 25%;">
                                                         <div class="dashboard-items search-items">
@@ -196,13 +201,13 @@
                                                                 </div>
                                                                 <br>';
                                                 
-                                                // Check if the appointment is confirmed
+                                                // Show different button based on appointment status
                                                 if ($status === 'confirmed') {
                                                     echo '<button class="login-btn btn-primary-soft btn" style="padding-top:11px;padding-bottom:11px;width:100%" disabled>
                                                             <font class="tn-in-text">အတည်ပြုပြီးပါပြီ။ သင်၏ email ကိုစစ်ဆေးပါ။</font>
                                                           </button>';
                                                 } else {
-                                                    echo '<a href="?action=drop&id=' . $appoid . '&title=' . $title . '&doc=' . $docname . '">
+                                                    echo '<a href="' . $cancel_link . '">
                                                             <button class="login-btn btn-primary-soft btn" style="padding-top:11px;padding-bottom:11px;width:100%">
                                                                 <font class="tn-in-text">Cancel Booking</font>
                                                             </button>
@@ -225,12 +230,13 @@
         </div>
     </div>
     <?php
-    // Handle actions
-    if ($_GET) {
-        $id = $_GET["id"];
-        $action = $_GET["action"];
+    // Handle GET actions (like canceling appointments)
+    if ($_GET && isset($_SESSION["user"])) {
+        $id = $_GET["id"] ?? null;
+        $action = $_GET["action"] ?? null;
         
-        if ($action == 'booking-added') {
+        if ($action == 'booking-added' && $id) {
+            // Show success message for new booking
             echo '
             <div id="popup1" class="overlay">
                 <div class="popup">
@@ -238,7 +244,7 @@
                         <h2>Booking Successfully.</h2>
                         <a class="close" href="appointment.php">&times;</a>
                         <div class="content">
-                            Your Appointment number is ' . $id . '.<br><br>
+                            Your Appointment number is ' . htmlspecialchars($id) . '.<br><br>
                         </div>
                         <div style="display: flex;justify-content: center;">
                             <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
@@ -247,9 +253,12 @@
                     </center>
                 </div>
             </div>';
-        } elseif ($action == 'drop') {
-            $title = $_GET["title"];
-            $docname = $_GET["doc"];
+        } 
+        elseif ($action == 'drop' && $id) {
+            // Show confirmation for canceling appointment
+            $title = $_GET["title"] ?? '';
+            $docname = $_GET["doc"] ?? '';
+            
             echo '
             <div id="popup1" class="overlay">
                 <div class="popup">
@@ -258,11 +267,11 @@
                         <a class="close" href="appointment.php">&times;</a>
                         <div class="content">
                             You want to Cancel this Appointment?<br><br>
-                            Session Name: &nbsp;<b>' . substr($title, 0, 40) . '</b><br>
-                            Doctor name&nbsp; : <b>' . substr($docname, 0, 40) . '</b><br><br>
+                            Session Name: &nbsp;<b>' . htmlspecialchars(substr($title, 0, 40)) . '</b><br>
+                            Doctor name&nbsp; : <b>' . htmlspecialchars(substr($docname, 0, 40)) . '</b><br><br>
                         </div>
                         <div style="display: flex;justify-content: center;">
-                            <a href="delete-appointment.php?id=' . $id . '" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                            <a href="delete-appointment.php?id=' . htmlspecialchars($id) . '" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
                             <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
                         </div>
                     </center>
