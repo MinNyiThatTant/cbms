@@ -35,6 +35,26 @@
     // Import database connection
     include("connection.php");
 
+// function hashAdminPasswords($database) {
+//     // Fetch all admin records
+//     $admins = $database->query("SELECT aemail, apassword FROM admin");
+    
+//     while ($admin = $admins->fetch_assoc()) {
+//         // Check if the password is already hashed
+//         if (!password_verify($admin['apassword'], $admin['apassword'])) {
+//             // Hash the password
+//             $hashedPassword = password_hash($admin['apassword'], PASSWORD_DEFAULT);
+//             // Update the password in the database
+//             $database->query("UPDATE admin SET apassword='$hashedPassword' WHERE aemail='{$admin['aemail']}'");
+//             echo "Updated password for: " . $admin['aemail'] . "<br>";
+//         }
+//     }
+// }
+
+// // Call the function to hash passwords
+// hashAdminPasswords($database);
+
+
     session_start();
     $_SESSION["user"] = "";
     $_SESSION["usertype"] = "";

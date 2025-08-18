@@ -7,15 +7,15 @@
 session_start();
 include("connection.php");
 
-function hashAdminPasswords($database) {
-    $admins = $database->query("SELECT aid, apassword FROM admin");
-    while ($admin = $admins->fetch_assoc()) {
-        if (!password_verify($admin['apassword'], $admin['apassword'])) { // Check if already hashed
-            $hashedPassword = password_hash($admin['apassword'], PASSWORD_DEFAULT);
-            $database->query("UPDATE admin SET apassword='$hashedPassword' WHERE aid='{$admin['aid']}'");
-        }
-    }
-}
+// function hashAdminPasswords($database) {
+//     $admins = $database->query("SELECT aid, apassword FROM admin");
+//     while ($admin = $admins->fetch_assoc()) {
+//         if (!password_verify($admin['apassword'], $admin['apassword'])) { // Check if already hashed
+//             $hashedPassword = password_hash($admin['apassword'], PASSWORD_DEFAULT);
+//             $database->query("UPDATE admin SET apassword='$hashedPassword' WHERE aid='{$admin['aid']}'");
+//         }
+//     }
+// }
 
 // Uncomment this line ONLY ONCE to hash existing admin passwords:
 // hashAdminPasswords($database);

@@ -219,7 +219,7 @@
                                         <td>
                 <div style="display:flex;justify-content: center;">';
 
-                                    // Check if the appointment is already confirmed
+                                    // Allow the doctor to confirm the appointment
                                     if ($status === 'confirmed') {
                                         echo '<button class="btn-primary-soft btn button-icon btn-confirm" style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;" disabled>
                                                 <font class="tn-in-text">Confirmed</font>
