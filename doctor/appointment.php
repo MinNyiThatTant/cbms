@@ -36,6 +36,7 @@
     include("../connection.php");
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\SMTP;
 
     require '../PHPMailer/src/Exception.php';
     require '../PHPMailer/src/PHPMailer.php';
@@ -208,7 +209,7 @@
                                     $email = $row["pemail"];
                                     $apponum = $row["apponum"];
                                     $appodate = $row["appodate"];
-                                    $status = $row["status"]; // Get the status of the appointment
+                                    $status = $row["status"];
 
                                     echo '<tr>
                                         <td style="font-weight:600;">&nbsp;' . substr($pname, 0, 25) . '</td>
@@ -219,7 +220,6 @@
                                         <td>
                 <div style="display:flex;justify-content: center;">';
 
-                                    // Allow the doctor to confirm the appointment
                                     if ($status === 'confirmed') {
                                         echo '<button class="btn-primary-soft btn button-icon btn-confirm" style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;" disabled>
                                                 <font class="tn-in-text">Confirmed</font>
@@ -261,39 +261,127 @@
         
         if ($action == 'confirm') {
             // Fetch appointment details
-            $appointmentQuery = $database->query("SELECT * FROM appointment INNER JOIN patient ON appointment.pid = patient.pid WHERE appoid = $id");
+            $appointmentQuery = $database->query("SELECT * FROM appointment 
+                INNER JOIN patient ON appointment.pid = patient.pid 
+                INNER JOIN schedule ON appointment.scheduleid = schedule.scheduleid
+                WHERE appoid = $id");
             $appointment = $appointmentQuery->fetch_assoc();
             
             if ($appointment) {
                 // Update appointment status
                 $database->query("UPDATE appointment SET status='confirmed' WHERE appoid=$id");
                 
-                // Send email to patient
+                // Send email to patient using Gmail SMTP
                 $mail = new PHPMailer(true);
                 try {
-                    //Server settings
+                    // Server settings for Gmail
                     $mail->isSMTP();
-                    $mail->Host = 'smtp.mailtrap.io'; // Set the SMTP server to send through
+                    $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = '0568168822fc5f'; // SMTP username
-                    $mail->Password = '828df875c824d4'; // SMTP password
-                    $mail->SMTPSecure = 'tls';   //PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 2525;
-
-                    //Recipients
-                    $mail->setFrom('from@example.com', 'CBMS');
-                    $mail->addAddress($appointment['pemail'], $appointment['pname']); // Add a recipient
-
+                    $mail->Username = 'royalmntt@gmail.com'; // Your Gmail address
+                    $mail->Password = 'qhokxvtzkcprmfki'; // Your Gmail app password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable TLS encryption
+                    $mail->Port = 465; // TCP port to connect to
+                    
+                    // Set email content in both English and Burmese
+                    $patientName = $appointment['pname'];
+                    $appointmentDate = date('F j, Y', strtotime($appointment['scheduledate']));
+                    $appointmentTime = date('h:i A', strtotime($appointment['scheduletime']));
+                    $doctorName = $username;
+                    $appointmentNumber = $appointment['apponum'];
+                    
+                    // Recipients
+                    $mail->setFrom('yourgmail@gmail.com', 'Clinic Appointment System');
+                    $mail->addAddress($appointment['pemail'], $patientName);
+                    
                     // Content
                     $mail->isHTML(true);
-                    $mail->Subject = 'Appointment Confirmation';
-                    $mail->Body    = 'Dear ' . $appointment['pname'] . ',<br>Your appointment has been confirmed for ' . $appointment['appodate'] . '.<br>Thank you!';
-                    $mail->AltBody = 'Dear ' . $appointment['pname'] . ', Your appointment has been confirmed for ' . $appointment['appodate'] . '. Thank you!';
-
+                    $mail->Subject = 'Your Appointment Confirmation';
+                    
+                    // Email body with both English and Burmese
+                    $mail->Body = "
+                    <html>
+                    <head>
+                        <style>
+                            body { font-family: Arial, sans-serif; line-height: 1.6; }
+                            .header { color: #2c3e50; font-size: 24px; margin-bottom: 20px; }
+                            .content { margin-bottom: 30px; }
+                            .footer { margin-top: 30px; font-size: 14px; color: #7f8c8d; }
+                            .burmese { font-family: 'Myanmar3', 'Padauk', sans-serif; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class='header'>Appointment Confirmation</div>
+                        
+                        <div class='content'>
+                            <p>Dear $patientName,</p>
+                            <p>Your appointment has been confirmed with Dr. $doctorName.</p>
+                            <p><strong>Appointment Details:</strong></p>
+                            <ul>
+                                <li>Date: $appointmentDate</li>
+                                <li>Time: $appointmentTime</li>
+                                <li>Appointment Number: $appointmentNumber</li>
+                            </ul>
+                        </div>
+                        
+                        <div class='content burmese'>
+                            <p>မင်္ဂလာပါ $patientName </p>
+                            <p>သင့်ရဲ့ ချိန်းဆိုမှုကို Dr. $doctorName နှင့် အတည်ပြုပြီးဖြစ်ပါသည်။</p>
+                            <p><strong>ချိန်းဆိုမှုအချက်အလက်:</strong></p>
+                            <ul>
+                                <li>ရက်စွဲ: $appointmentDate</li>
+                                <li>အချိန်: $appointmentTime</li>
+                                <li>ချိန်းဆိုမှုနံပါတ်: $appointmentNumber</li>
+                            </ul>
+                        </div>
+                        
+                        <div class='footer'>
+                            <p>Thank you for choosing our clinic. Please arrive 15 minutes before your scheduled time.</p>
+                            <p class='burmese'>ကျွန်ုပ်တို့ဆေးခန်းကို ရွေးချယ်တဲ့အတွက် ကျေးဇူးတင်ပါတယ်။ ချိန်းဆိုထားသောအချိန်မတိုင်မီ ၁၅ မိနစ်စော၍ ရောက်ရှိပါရန်။</p>
+                        </div>
+                    </body>
+                    </html>
+                    ";
+                    
+                    // Plain text version for non-HTML email clients
+                    $mail->AltBody = "Dear $patientName,\n\nYour appointment with Dr. $doctorName has been confirmed for $appointmentDate at $appointmentTime.\n\nAppointment Number: $appointmentNumber\n\nThank you!";
+                    
                     $mail->send();
-                    echo 'Email has been sent';
+                    
+                    // Show success message
+                    echo '
+                    <div id="popup1" class="overlay">
+                        <div class="popup">
+                            <center>
+                                <h2>Success!</h2>
+                                <a class="close" href="appointment.php">&times;</a>
+                                <div class="content">
+                                    Appointment confirmed and notification email sent to patient.
+                                </div>
+                                <div style="display: flex;justify-content: center;">
+                                    <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;OK&nbsp;</font></button></a>
+                                </div>
+                            </center>
+                        </div>
+                    </div>';
+                    
                 } catch (Exception $e) {
-                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    echo '
+                    <div id="popup1" class="overlay">
+                        <div class="popup">
+                            <center>
+                                <h2>Error!</h2>
+                                <a class="close" href="appointment.php">&times;</a>
+                                <div class="content">
+                                    Appointment was confirmed but email could not be sent.<br>
+                                    Error: ' . $mail->ErrorInfo . '
+                                </div>
+                                <div style="display: flex;justify-content: center;">
+                                    <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;OK&nbsp;</font></button></a>
+                                </div>
+                            </center>
+                        </div>
+                    </div>';
                 }
             }
         } elseif ($action == 'drop') {
@@ -307,7 +395,7 @@
                         <h2>Are you sure?</h2>
                         <a class="close" href="appointment.php">&times;</a>
                         <div class="content">
-                            You want to delete this record<br><br>
+                            You want to cancel this appointment<br><br>
                             Patient Name: &nbsp;<b>' . substr($nameget, 0, 40) . '</b><br>
                             Appointment number &nbsp; : <b>' . substr($apponum, 0, 40) . '</b><br><br>
                         </div>
@@ -321,6 +409,5 @@
         }
     }
     ?>
-    </div>
 </body>
 </html>
