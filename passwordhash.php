@@ -1,5 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- [Previous head section remains the same] -->
+<body>
+
+<?php
+session_start();
+include("connection.php");
+
+function hashAdminPasswords($database) {
+    $admins = $database->query("SELECT aid, apassword FROM admin");
+    while ($admin = $admins->fetch_assoc()) {
+        if (!password_verify($admin['apassword'], $admin['apassword'])) { // Check if already hashed
+            $hashedPassword = password_hash($admin['apassword'], PASSWORD_DEFAULT);
+            $database->query("UPDATE admin SET apassword='$hashedPassword' WHERE aid='{$admin['aid']}'");
+        }
+    }
+}
+
+// Uncomment this line ONLY ONCE to hash existing admin passwords:
+// hashAdminPasswords($database);
+
+if ($_POST) {
+    $email = $_POST['useremail'];
+    $password = $_POST['userpassword'];
+
+    $result = $database->query("SELECT * FROM webuser WHERE email='$email'");
+    
+    if ($result->num_rows == 1) {
+        $utype = $result->fetch_assoc()['usertype'];
+        
+        if ($utype == 'a') {
+            $admin = $database->query("SELECT * FROM admin WHERE aemail='$email'")->fetch_assoc();
+            if ($admin && password_verify($password, $admin['apassword'])) {
+                $_SESSION['user'] = $email;
+                $_SESSION['usertype'] = 'a';
+                header('location: admin/index.php');
+                exit();
+            } else {
+                $error = "<label class='form-label error'>Invalid admin credentials</label>";
+            }
+        }
+        // [Rest of your login logic for other user 
+    }
+}
+?>
+
+
+<?php
+// Include your database connection
+include("connection.php");
+
+function hashAdminPasswords($database) {
+    // Fetch all admin records
+    $admins = $database->query("SELECT aemail, apassword FROM admin");
+    
+    while ($admin = $admins->fetch_assoc()) {
+        // Check if the password is already hashed
+        if (!password_verify($admin['apassword'], $admin['apassword'])) {
+            // Hash the password
+            $hashedPassword = password_hash($admin['apassword'], PASSWORD_DEFAULT);
+            // Update the password in the database
+            $database->query("UPDATE admin SET apassword='$hashedPassword' WHERE aemail='{$admin['aemail']}'");
+            echo "Updated password for: " . $admin['aemail'] . "<br>";
+        }
+    }
+}
+
+// Call the function to hash passwords
+hashAdminPasswords($database);
+?>
+
+
+//login
+if ($utype == 'a') {
+    $admin = $database->query("SELECT * FROM admin WHERE aemail='$email'")->fetch_assoc();
+    if ($admin && password_verify($password, $admin['apassword'])) {
+        $_SESSION['user'] = $email;
+        $_SESSION['usertype'] = 'a';
+        header('location: admin/index.php');
+        exit();
+    } else {
+        $error = "<label class='form-label error'>Invalid admin credentials</label>";
+    }
+}
+
+
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -35,6 +128,25 @@
     // Import database connection
     include("connection.php");
 
+    function hashAdminPasswords($database) {
+        // Fetch all admin records
+        $admins = $database->query("SELECT aemail, apassword FROM admin");
+        
+        while ($admin = $admins->fetch_assoc()) {
+            // Check if the password is already hashed
+            if (!password_verify($admin['apassword'], $admin['apassword'])) {
+                // Hash the password
+                $hashedPassword = password_hash($admin['apassword'], PASSWORD_DEFAULT);
+                // Update the password in the database
+                $database->query("UPDATE admin SET apassword='$hashedPassword' WHERE aemail='{$admin['aemail']}'");
+                echo "Updated password for: " . $admin['aemail'] . "<br>";
+            }
+        }
+    }
+
+    // Uncomment this line ONLY ONCE to hash existing admin passwords:
+    // hashAdminPasswords($database);
+
     session_start();
     $_SESSION["user"] = "";
     $_SESSION["usertype"] = "";
@@ -51,22 +163,22 @@
         // Check if the email exists
         $result = $database->query("SELECT * FROM webuser WHERE email='$email'");
         if ($result->num_rows == 1) {
-            $userData = $result->fetch_assoc();
-            $utype = $userData['usertype'];
-
+            $utype = $result->fetch_assoc()['usertype'];
             if ($utype == 'p') {
-                // Patient login
+                // Check if the patient exists
                 $checker = $database->query("SELECT * FROM patient WHERE pemail='$email'");
                 if ($checker->num_rows == 1) {
                     $patientData = $checker->fetch_assoc();
                     
                     // Verify password
-                    if (password_verify($password, $patientData['ppassword'])) {
-                        $_SESSION['patient_id'] = $patientData['pid'];
+                    if (password_verify($password, $patientData['ppassword'])) { // Use 'ppassword' to match the hashed password
+                        // Store patient ID in session
+                        $_SESSION['patient_id'] = $patientData['pid']; // Assuming 'pid' is the patient ID
                         $_SESSION['usertype'] = 'p';
                         $_SESSION['user'] = $email;
 
-                        header('location: patient/question.php');
+                        // Redirect to the questionnaire page
+                        header('location: patient/question.php'); // Redirect to the questionnaire page
                         exit();
                     } else {
                         $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
@@ -79,7 +191,7 @@
                 $checker = $database->query("SELECT * FROM admin WHERE aemail='$email'");
                 if ($checker->num_rows == 1) {
                     $adminData = $checker->fetch_assoc();
-                    if (password_verify($password, $adminData['apassword'])) {
+                    if (password_verify($password, $adminData['apassword'])) { // Use 'apassword' to match the hashed password
                         $_SESSION['user'] = $email;
                         $_SESSION['usertype'] = 'a';
                         header('location: admin/index.php');
@@ -95,7 +207,7 @@
                 $checker = $database->query("SELECT * FROM doctor WHERE docemail='$email'");
                 if ($checker->num_rows == 1) {
                     $doctorData = $checker->fetch_assoc();
-                    if (password_verify($password, $doctorData['docpassword'])) {
+                    if (password_verify($password, $doctorData['docpassword'])) { // Use 'docpassword' to match the hashed password
                         $_SESSION['user'] = $email;
                         $_SESSION['usertype'] = 'd';
                         header('location: doctor/index.php');

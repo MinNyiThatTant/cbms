@@ -32,9 +32,6 @@
 <body>
 
     <?php
-    // Import database connection
-    include("connection.php");
-
     session_start();
     $_SESSION["user"] = "";
     $_SESSION["usertype"] = "";
@@ -43,6 +40,9 @@
     date_default_timezone_set('Asia/Yangon');
     $date = date('Y-m-d');
     $_SESSION["date"] = $date;
+
+    // Import database connection
+    include("connection.php");
 
     if ($_POST) {
         $email = $_POST['useremail'];
@@ -55,18 +55,20 @@
             $utype = $userData['usertype'];
 
             if ($utype == 'p') {
-                // Patient login
+                // Check if the patient exists
                 $checker = $database->query("SELECT * FROM patient WHERE pemail='$email'");
                 if ($checker->num_rows == 1) {
                     $patientData = $checker->fetch_assoc();
                     
                     // Verify password
-                    if (password_verify($password, $patientData['ppassword'])) {
-                        $_SESSION['patient_id'] = $patientData['pid'];
+                    if (password_verify($password, $patientData['ppassword'])) { // Use 'ppassword' to match the hashed password
+                        // Store patient ID in session
+                        $_SESSION['patient_id'] = $patientData['pid']; // Assuming 'pid' is the patient ID
                         $_SESSION['usertype'] = 'p';
                         $_SESSION['user'] = $email;
 
-                        header('location: patient/question.php');
+                        // Redirect to the questionnaire page
+                        header('location: patient/question.php'); // Redirect to the questionnaire page
                         exit();
                     } else {
                         $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
@@ -79,7 +81,7 @@
                 $checker = $database->query("SELECT * FROM admin WHERE aemail='$email'");
                 if ($checker->num_rows == 1) {
                     $adminData = $checker->fetch_assoc();
-                    if (password_verify($password, $adminData['apassword'])) {
+                    if (password_verify($password, $adminData['apassword'])) { // Use 'apassword' to match the hashed password
                         $_SESSION['user'] = $email;
                         $_SESSION['usertype'] = 'a';
                         header('location: admin/index.php');
@@ -95,7 +97,7 @@
                 $checker = $database->query("SELECT * FROM doctor WHERE docemail='$email'");
                 if ($checker->num_rows == 1) {
                     $doctorData = $checker->fetch_assoc();
-                    if (password_verify($password, $doctorData['docpassword'])) {
+                    if (password_verify($password, $doctorData['docpassword'])) { // Use 'docpassword' to match the hashed password
                         $_SESSION['user'] = $email;
                         $_SESSION['usertype'] = 'd';
                         header('location: doctor/index.php');
