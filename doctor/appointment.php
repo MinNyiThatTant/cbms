@@ -278,8 +278,8 @@
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'royalmntt@gmail.com'; // Your Gmail address
-                    $mail->Password = 'qhokxvtzkcprmfki'; // Your Gmail app password
+                    $mail->Username = 'email'; // Your Gmail address
+                    $mail->Password = 'yourpassword'; // Your Gmail app password
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable TLS encryption
                     $mail->Port = 465; // TCP port to connect to
                     
