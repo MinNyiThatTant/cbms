@@ -291,7 +291,7 @@
                     $appointmentNumber = $appointment['apponum'];
                     
                     // Recipients
-                    $mail->setFrom('royalmntt@gmail.com', 'Clinic Appointment System');
+                    $mail->setFrom('yourmail@gmail.com', 'Clinic Appointment System');
                     $mail->addAddress($appointment['pemail'], $patientName);
                     
                     // Content
